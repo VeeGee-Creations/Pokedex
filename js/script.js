@@ -4,7 +4,7 @@ let favFood = '';
 
 
 function fed() {
-    if (favFood === 'Nothing' || favFood === '') {
+    if (favFood === 'Nothing' || favFood === 'nothing' || favFood === '') {
         document.getElementById('response').innerHTML = '<br/>Bunny is sad.</br>Will you please feed Bunny?';
     }
     else if (favFood === 'Carrot Cake') {
