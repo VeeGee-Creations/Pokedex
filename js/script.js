@@ -1,7 +1,7 @@
-let pokemonList = {};
+let pokemonList = [];
 
 // Add Pokemon to pokemonList
-pokemonList.p001 = {
+pokemonList.push(p001 = {
     name: 'Bulbasaur',
     category: 'Seed',
     height: 2.04,
@@ -19,9 +19,9 @@ pokemonList.p001 = {
         weakness3: 'Flying',
         weakness4: 'Ice'
     }
-};
+});
 
-pokemonList.p002 = {
+pokemonList.push(p002 = {
     name: 'Ivysaur',
     category: 'Seed',
     height: 3.03,
@@ -39,9 +39,9 @@ pokemonList.p002 = {
         weakness3: 'Flying',
         weakness4: 'Ice'
     }
-};
+});
 
-pokemonList.p003 = {
+pokemonList.push(p003 = {
     name: 'Venusaur',
     category: 'Seed',
     height: 6.07,
@@ -59,9 +59,9 @@ pokemonList.p003 = {
         weakness3: 'Flying',
         weakness4: 'Ice'
     }
-};
+});
 
-pokemonList.p004 = {
+pokemonList.push(p004 = {
     name: 'Charmander',
     category: 'Lizard',
     height: 2.00,
@@ -77,9 +77,9 @@ pokemonList.p004 = {
         weakness2: 'Ground',
         weakness3: 'Rock'
     }
-};
+});
 
-pokemonList.p005 = {
+pokemonList.push(p005 = {
     name: 'Charmeleon',
     category: 'Flame',
     height: 3.07,
@@ -95,7 +95,7 @@ pokemonList.p005 = {
         weakness2: 'Ground',
         weakness3: 'Rock'
     }
-};
+});
 
 pokemonList.p006 = {
     name: 'Charizard',
@@ -116,7 +116,7 @@ pokemonList.p006 = {
     }
 };
 
-pokemonList.p007 = {
+pokemonList.push(p007 = {
     name: 'Squirtle',
     category: 'Tiny Turtle',
     height: 1.08,
@@ -131,9 +131,9 @@ pokemonList.p007 = {
         weakness1: 'Grass',
         weakness2: 'Electric'
     }
-};
+});
 
-pokemonList.p008 = {
+pokemonList.push(p008 = {
     name: 'Wartortle',
     category: 'Turtle',
     height: 3.03,
@@ -148,9 +148,9 @@ pokemonList.p008 = {
         weakness1: 'Grass',
         weakness2: 'Electric'
     }
-};
+});
 
-pokemonList.p009 = {
+pokemonList.push(p009 = {
     name: 'Blastoise',
     category: 'Shellfish',
     height: 5.03,
@@ -165,7 +165,7 @@ pokemonList.p009 = {
         weakness1: 'Grass',
         weakness2: 'Electric'
     }
-};
+});
 
 // Verify Console Output
 console.log(pokemonList);
