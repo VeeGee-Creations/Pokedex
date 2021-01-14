@@ -1,5 +1,6 @@
 let pokemonList = {};
 
+// Add Pokemon to pokemonList
 pokemonList.p001 = {
     name: 'Bulbasaur',
     category: 'Seed',
@@ -166,4 +167,5 @@ pokemonList.p009 = {
     }
 };
 
+// Verify Console Output
 console.log(pokemonList);
