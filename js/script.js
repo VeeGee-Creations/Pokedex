@@ -1,171 +1,125 @@
 let pokemonList = [];
 
-// Add Pokemon to pokemonList
-pokemonList.push(p001 = {
+// Create Pokemon
+let p001 = {
     name: 'Bulbasaur',
     category: 'Seed',
     height: 2.04,
     weight: 15.2,
-    abilities: {
-        abbility1: 'Overgrow'
-    },
-    type: {
-        type1: 'Grass',
-        type2: 'Poison'
-    },
-    weakness: {
-        weakness1: 'Fire',
-        weakness2: 'Psychic',
-        weakness3: 'Flying',
-        weakness4: 'Ice'
-    }
-});
+    abilities: ['Overgrow'],
+    type: ['Grass', 'Poison'],
+    weakness: [
+        'Fire',
+        'Psychic',
+        'Flying',
+        'Ice'
+    ]
+};
 
-pokemonList.push(p002 = {
+let p002 = {
     name: 'Ivysaur',
     category: 'Seed',
     height: 3.03,
     weight: 28.7,
-    abilities: {
-        abbility1: 'Overgrow'
-    },
-    type: {
-        type1: 'Grass',
-        type2: 'Poison'
-    },
-    weakness: {
-        weakness1: 'Fire',
-        weakness2: 'Psychic',
-        weakness3: 'Flying',
-        weakness4: 'Ice'
-    }
-});
+    abilities: ['Overgrow'],
+    type: ['Grass', 'Poison'],
+    weakness: [
+        'Fire',
+        'Psychic',
+        'Flying',
+        'Ice'
+    ]
+};
 
-pokemonList.push(p003 = {
+let p003 = {
     name: 'Venusaur',
     category: 'Seed',
     height: 6.07,
     weight: 220.5,
-    abilities: {
-        abbility1: 'Overgrow'
-    },
-    type: {
-        type1: 'Grass',
-        type2: 'Poison'
-    },
-    weakness: {
-        weakness1: 'Fire',
-        weakness2: 'Psychic',
-        weakness3: 'Flying',
-        weakness4: 'Ice'
-    }
-});
+    abilities: ['Overgrow'],
+    type: ['Grass', 'Poison'],
+    weakness: [
+        'Fire',
+        'Psychic',
+        'Flying',
+        'Ice'
+    ]
+};
 
-pokemonList.push(p004 = {
+let p004 = {
     name: 'Charmander',
     category: 'Lizard',
     height: 2.00,
     weight: 18.7,
-    abilities: {
-        abbility1: 'Blaze'
-    },
-    type: {
-        type1: 'Fire'
-    },
-    weakness: {
-        weakness1: 'Water',
-        weakness2: 'Ground',
-        weakness3: 'Rock'
-    }
-});
+    abilities: ['Blaze'],
+    type: ['Fire'],
+    weakness: [
+        'Water',
+        'Ground',
+        'Rock'
+    ]
+};
 
-pokemonList.push(p005 = {
+let p005 = {
     name: 'Charmeleon',
     category: 'Flame',
     height: 3.07,
     weight: 41.9,
-    abilities: {
-        abbility1: 'Blaze'
-    },
-    type: {
-        type1: 'Fire'
-    },
-    weakness: {
-        weakness1: 'Water',
-        weakness2: 'Ground',
-        weakness3: 'Rock'
-    }
-});
+    abilities: ['Blaze'],
+    type: ['Fire'],
+    weakness: [
+        'Water',
+        'Ground',
+        'Rock'
+    ]
+};
 
-pokemonList.p006 = {
+let p006 = {
     name: 'Charizard',
     category: 'Flame',
     height: 5.07,
     weight: 199.5,
-    abilities: {
-        abbility1: 'Blaze'
-    },
-    type: {
-        type1: 'Fire',
-        type2: 'Flying'
-    },
-    weakness: {
-        weakness1: 'Water',
-        weakness2: 'Electric',
-        weakness3: 'Rock'
-    }
+    abilities: ['Blaze'],
+    type: ['Fire', 'Flying'],
+    weakness: [
+        'Water',
+        'Electric',
+        'Rock'
+    ]
 };
 
-pokemonList.push(p007 = {
+let p007 = {
     name: 'Squirtle',
     category: 'Tiny Turtle',
     height: 1.08,
     weight: 19.8,
-    abilities: {
-        abbility1: 'Torrent'
-    },
-    type: {
-        type1: 'Water'
-    },
-    weakness: {
-        weakness1: 'Grass',
-        weakness2: 'Electric'
-    }
-});
+    abilities: ['Torrent'],
+    type: ['Water'],
+    weakness: ['Grass', 'Electric']
+};
 
-pokemonList.push(p008 = {
+let p008 = {
     name: 'Wartortle',
     category: 'Turtle',
     height: 3.03,
     weight: 49.6,
-    abilities: {
-        abbility1: 'Torrent'
-    },
-    type: {
-        type1: 'Water'
-    },
-    weakness: {
-        weakness1: 'Grass',
-        weakness2: 'Electric'
-    }
-});
+    abilities: ['Torrent'],
+    type: ['Water'],
+    weakness: ['Grass', 'Electric']
+};
 
-pokemonList.push(p009 = {
+let p009 = {
     name: 'Blastoise',
     category: 'Shellfish',
     height: 5.03,
     weight: 188.5,
-    abilities: {
-        abbility1: 'Torrent'
-    },
-    type: {
-        type1: 'Water'
-    },
-    weakness: {
-        weakness1: 'Grass',
-        weakness2: 'Electric'
-    }
-});
+    abilities: ['Torrent'],
+    type: ['Water'],
+    weakness: ['Grass', 'Electric']
+};
+
+// Add Pokemon to pokeList
+pokemonList.push(p001, p002, p003, p004, p005, p006, p008, p009);
 
 // Verify Console Output
 console.log(pokemonList);
