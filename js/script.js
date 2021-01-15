@@ -119,7 +119,7 @@ let p009 = {
 };
 
 // Add Pokemon to pokeList
-pokemonList.push(p001, p002, p003, p004, p005, p006, p008, p009);
+pokemonList.push(p001, p002, p003, p004, p005, p006, p007, p008, p009);
 
 // Verify Console Output
 console.log(pokemonList);
