@@ -4,7 +4,7 @@ let pokemonList = [];
 let p001 = {
     name: 'Bulbasaur',
     category: 'Seed',
-    height: 2.04,
+    height: '2\' 04"',
     weight: 15.2,
     abilities: ['Overgrow'],
     type: ['Grass', 'Poison'],
@@ -19,7 +19,7 @@ let p001 = {
 let p002 = {
     name: 'Ivysaur',
     category: 'Seed',
-    height: 3.03,
+    height: '3\' 03"',
     weight: 28.7,
     abilities: ['Overgrow'],
     type: ['Grass', 'Poison'],
@@ -34,7 +34,7 @@ let p002 = {
 let p003 = {
     name: 'Venusaur',
     category: 'Seed',
-    height: 6.07,
+    height: '6\' 07"',
     weight: 220.5,
     abilities: ['Overgrow'],
     type: ['Grass', 'Poison'],
@@ -49,7 +49,7 @@ let p003 = {
 let p004 = {
     name: 'Charmander',
     category: 'Lizard',
-    height: 2.00,
+    height: '2\' 00"',
     weight: 18.7,
     abilities: ['Blaze'],
     type: ['Fire'],
@@ -63,7 +63,7 @@ let p004 = {
 let p005 = {
     name: 'Charmeleon',
     category: 'Flame',
-    height: 3.07,
+    height: '3\' 07"',
     weight: 41.9,
     abilities: ['Blaze'],
     type: ['Fire'],
@@ -77,7 +77,7 @@ let p005 = {
 let p006 = {
     name: 'Charizard',
     category: 'Flame',
-    height: 5.07,
+    height: '5\' 07"',
     weight: 199.5,
     abilities: ['Blaze'],
     type: ['Fire', 'Flying'],
@@ -91,7 +91,7 @@ let p006 = {
 let p007 = {
     name: 'Squirtle',
     category: 'Tiny Turtle',
-    height: 1.08,
+    height: '1\' 08"',
     weight: 19.8,
     abilities: ['Torrent'],
     type: ['Water'],
@@ -101,7 +101,7 @@ let p007 = {
 let p008 = {
     name: 'Wartortle',
     category: 'Turtle',
-    height: 3.03,
+    height: '3\' 03"',
     weight: 49.6,
     abilities: ['Torrent'],
     type: ['Water'],
@@ -111,7 +111,7 @@ let p008 = {
 let p009 = {
     name: 'Blastoise',
     category: 'Shellfish',
-    height: 5.03,
+    height: '5\' 03"',
     weight: 188.5,
     abilities: ['Torrent'],
     type: ['Water'],
@@ -121,5 +121,15 @@ let p009 = {
 // Add Pokemon to pokeList
 pokemonList.push(p001, p002, p003, p004, p005, p006, p007, p008, p009);
 
-// Verify Console Output
-console.log(pokemonList);
+// Print pokemon to DOM
+document.write('<p id = "poke-listing">')
+for(let i = 0; pokemonList.length > i; i++){
+    document.write(pokemonList[i].name + '<br/>Height: ' + pokemonList[i].height + '<br/>Weight:' + pokemonList[i].weight + 'lbs' + '<br/>');
+    if (pokemonList[i].height > '3\' 00"' && pokemonList[i].weight > 100){
+        document.write('What a chonker!<br/><br/>');
+    }
+    else{
+        document.write('<br/>')
+    }
+}
+document.write('</p>')
