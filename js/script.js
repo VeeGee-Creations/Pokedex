@@ -1,4 +1,32 @@
-let pokemonList = [];
+let pokemonRepository = (function() {
+    let pokemonList = [];
+
+    function add(pokemon) {
+        const properties = ['name', 'category', 'height', 'abilities', 'type', 'weakness']
+        if(typeof pokemon === 'object') {
+            for(let i = 0; i < pokemon.length; i++) {
+                if (Objeck.keys(pokemon)[i] === Object.keys(properties)[i]) {
+                    pokemonList.push(pokemon);
+                }
+                else {
+                    console.error('has incorrect properties');
+                }
+            }
+        }
+        else {
+            console.error('is incorrect type');
+        }
+    }
+
+    function getAll() {
+        return pokemonList;
+    }
+
+    return {
+        add: add,
+        getAll: getAll
+    };
+})();
 
 // Create Pokemon
 let p001 = {
@@ -118,18 +146,30 @@ let p009 = {
     weakness: ['Grass', 'Electric']
 };
 
+let p010 = 11;
+let p011 = {color: 'red'};
+
 // Add Pokemon to pokeList
-pokemonList.push(p001, p002, p003, p004, p005, p006, p007, p008, p009);
+pokemonRepository.add(p001);
+pokemonRepository.add(p002);
+pokemonRepository.add(p003);
+pokemonRepository.add(p004);
+pokemonRepository.add(p005);
+pokemonRepository.add(p006);
+pokemonRepository.add(p007);
+pokemonRepository.add(p008);
+pokemonRepository.add(p009);
+pokemonRepository.add(p010);
+pokemonRepository.add(p011);
 
 // Print pokemon to DOM
-document.write('<p id = "poke-listing">')
-for(let i = 0; pokemonList.length > i; i++){
-    document.write(pokemonList[i].name + '<br/>Height: ' + pokemonList[i].height + '<br/>Weight:' + pokemonList[i].weight + 'lbs' + '<br/>');
-    if (pokemonList[i].height > '3\' 00"' && pokemonList[i].weight > 100){
-        document.write('What a chonker!<br/><br/>');
+pokemonRepository.getAll().forEach(function(pokemon) {
+    pokelist = document.getElementById('pokelist');
+    pokelist.insertAdjacentHTML('beforeend', pokemon.name + '<br/>Height: ' + pokemon.height + '<br/>Weight:' + pokemon.weight + 'lbs' + '<br/>');
+    if (pokemon.height > '3\' 00"' && pokemon.weight > 100){
+        pokelist.insertAdjacentHTML('beforeend', 'What a chonker!<br/><br/>');
     }
     else{
-        document.write('<br/>')
+        pokelist.insertAdjacentHTML('beforeend', '<br/>')
     }
-}
-document.write('</p>')
+});
