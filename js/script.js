@@ -27,10 +27,21 @@ let pokemonRepository = (function() {
             }
         // console log format errors
             else {
-                for (let i = 0; i < pokArray.length; i++)
+                for (let i = 0; i < pokArray.length; i++) {
                     if(pokArray[i] !== properties[i]){
-                    console.error(pokArray[i] + ' is an incorrect property');
+                        console.error(pokArray[i] + ' is an incorrect property');
                     }
+                    else {
+                        for (let i = 0; i < properties.length; i++) {
+                            const missingProperty = function findMissing(item) {
+                                return !pokArray.includes(item);
+                            }(properties[i]);
+                            if (missingProperty === true){
+                                console.error(properties[i] + ' is missing from object');
+                            }
+                        }
+                    }
+                }
             }
         }
         else {
