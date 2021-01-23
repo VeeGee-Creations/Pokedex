@@ -1,5 +1,5 @@
 let pokemonRepository = (function() {
-    let pokemonList = [];
+    const pokemonList = [];
 
     function add(pokemon) {
 
@@ -53,21 +53,56 @@ let pokemonRepository = (function() {
         return pokemonList;
     }
 
-    function byName(pokeName) {
-        const filteredList = [];
-        for (let item of pokemonList) {
-            if (item.name === pokeName) {
-                filteredList.push(item);
-            }
-        }
 
-        return filteredList;
+    function filterBy(property, parameter){
+        if(property === 'name'){
+            const nameList = pokemonList.filter(function (pokemon) {
+                return pokemon.name === parameter;
+            });
+            return nameList;
+        }
+        else if(property === 'category'){
+            const categoryList = pokemonList.filter(function (pokemon) {
+                return pokemon.category === parameter;
+            });
+            return categoryList;
+        }
+        else if(property === 'height'){
+            const heightList = pokemonList.filter(function (pokemon) {
+                return pokemon.height === parameter;
+            });
+            return heightList;
+        }
+        else if(property === 'weight'){
+            const weightList = pokemonList.filter(function (pokemon) {
+                return pokemon.weight === parameter;
+            });
+            return weightList;
+        }
+        else if (property === 'abilities') {
+            const abilitiesList = pokemonList.filter(function (pokemon) {
+                return pokemon.abilities === parameter;
+            });
+            return abilitiesList;
+        }
+        else if (property === 'type') {
+            const filteredList = pokemonList.filter(function (pokemon) {
+                return pokemon.type === parameter;
+            });
+            return typeList;
+        }
+        else if (property === 'weakness') {
+            const filteredList = pokemonList.filter(function (pokemon) {
+                return pokemon.weakness === parameter;
+            });
+            return weaknessList;
+        }
     }
 
     return {
         add: add,
         getAll: getAll,
-        byName: byName
+        filterBy: filterBy
     };
 })();
 
@@ -218,4 +253,6 @@ pokemonRepository.getAll().forEach(function(pokemon) {
     }
 });
 
-console.log(pokemonRepository.byName('Blastoise'));
+console.log(pokemonRepository.filterBy('name', 'Blastoise'));
+console.log(pokemonRepository.filterBy('category', 'Seed'));
+console.log(pokemonRepository.filterBy('abilities', 'Blaze'));
