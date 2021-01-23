@@ -42,9 +42,21 @@ let pokemonRepository = (function() {
         return pokemonList;
     }
 
+    function byName(pokeName) {
+        const filteredList = [];
+        for (let item of pokemonList) {
+            if (item.name === pokeName) {
+                filteredList.push(item);
+            }
+        }
+
+        return filteredList;
+    }
+
     return {
         add: add,
-        getAll: getAll
+        getAll: getAll,
+        byName: byName
     };
 })();
 
@@ -194,3 +206,5 @@ pokemonRepository.getAll().forEach(function(pokemon) {
         pokelist.insertAdjacentHTML('beforeend', '<br/>')
     }
 });
+
+console.log(pokemonRepository.byName('Blastoise'));
