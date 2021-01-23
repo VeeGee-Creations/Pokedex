@@ -1,23 +1,64 @@
 let pokemonRepository = (function() {
     let pokemonList = [];
 
+    // function add(pokemon) {
+        
+    //     let pokArray = Object.keys(pokemon);
+    //     const properties = ['name', 'category', 'height', 'abilities', 'type', 'weakness']
+    //     if(typeof pokemon === 'object'){
+    //         for (let i = 0; i < pokArray.length; i++) {
+    //             if (pokArray[i] === properties[i]) {
+    //                 let accepted = pokemon;
+    //                 return pokemonList.push(accepted);
+    //             }
+    //             else {
+    //                 console.error(Object.keys(pokemon)[i] + ' is an incorrect property');
+    //             }
+    //         }
+    //     }
+    //     else {
+    //         console.error(typeof pokemon + ' is incorrect type');
+    //     }
+    // }
+
+
     function add(pokemon) {
-        const properties = ['name', 'category', 'height', 'abilities', 'type', 'weakness']
-        if(typeof pokemon === 'object') {
-            for(let i = 0; i < pokemon.length; i++) {
-                if (Objeck.keys(pokemon)[i] === Object.keys(properties)[i]) {
-                    pokemonList.push(pokemon);
-                }
-                else {
-                    console.error('has incorrect properties');
-                }
+
+        // Create array of pokemon properties
+        const pokArray = Object.keys(pokemon);
+        //master list of properties
+        const properties = ['name', 'category', 'height', 'weight', 'abilities', 'type', 'weakness']
+
+        // compare pokArray to properties
+        const comparrison = function (arr1, arr2) {
+
+            if (arr1.length !== arr2.length) {
+                return false;
+            }
+
+            return arr1.every((val) => arr2.includes(val));
+
+        }(pokArray, properties);
+
+        // if formated properly, push to list
+        if (typeof pokemon === 'object') {
+            if (comparrison === true) {
+                let accepted = pokemon;
+                return pokemonList.push(accepted);
+            }
+        // console log format errors
+            else {
+                for (let i = 0; i < pokArray.length; i++)
+                    if(pokArray[i] !== properties[i]){
+                    console.error(pokArray[i] + ' is an incorrect property');
+                    }
             }
         }
         else {
-            console.error('is incorrect type');
+            console.error(typeof pokemon + ' is an incorrect type');
         }
     }
-
+1
     function getAll() {
         return pokemonList;
     }
@@ -146,10 +187,11 @@ let p009 = {
     weakness: ['Grass', 'Electric']
 };
 
+//test filters
 let p010 = 11;
-let p011 = {color: 'red'};
+let p011 = {name: 'crayon', color: 'red'};
 
-// Add Pokemon to pokeList
+// Add Pokemon to pokeRepository
 pokemonRepository.add(p001);
 pokemonRepository.add(p002);
 pokemonRepository.add(p003);
