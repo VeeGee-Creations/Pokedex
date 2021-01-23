@@ -1,27 +1,6 @@
 let pokemonRepository = (function() {
     let pokemonList = [];
 
-    // function add(pokemon) {
-        
-    //     let pokArray = Object.keys(pokemon);
-    //     const properties = ['name', 'category', 'height', 'abilities', 'type', 'weakness']
-    //     if(typeof pokemon === 'object'){
-    //         for (let i = 0; i < pokArray.length; i++) {
-    //             if (pokArray[i] === properties[i]) {
-    //                 let accepted = pokemon;
-    //                 return pokemonList.push(accepted);
-    //             }
-    //             else {
-    //                 console.error(Object.keys(pokemon)[i] + ' is an incorrect property');
-    //             }
-    //         }
-    //     }
-    //     else {
-    //         console.error(typeof pokemon + ' is incorrect type');
-    //     }
-    // }
-
-
     function add(pokemon) {
 
         // Create array of pokemon properties
