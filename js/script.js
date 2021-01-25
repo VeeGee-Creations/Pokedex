@@ -69,31 +69,31 @@ let pokemonRepository = (function() {
         }
         else if(property === 'height'){
             const heightList = pokemonList.filter(function (pokemon) {
-                return pokemon.height === parameter;
+                return pokemon.height.feet >= parameter;
             });
             return heightList;
         }
         else if(property === 'weight'){
             const weightList = pokemonList.filter(function (pokemon) {
-                return pokemon.weight === parameter;
+                return pokemon.weight >= parameter;
             });
             return weightList;
         }
         else if (property === 'abilities') {
             const abilitiesList = pokemonList.filter(function (pokemon) {
-                return pokemon.abilities === parameter;
+                return pokemon.abilities.includes(parameter);
             });
             return abilitiesList;
         }
         else if (property === 'type') {
             const filteredList = pokemonList.filter(function (pokemon) {
-                return pokemon.type === parameter;
+                return pokemon.type.includes(parameter);
             });
             return typeList;
         }
         else if (property === 'weakness') {
             const filteredList = pokemonList.filter(function (pokemon) {
-                return pokemon.weakness === parameter;
+                return pokemon.weakness.includes(parameter);
             });
             return weaknessList;
         }
@@ -110,7 +110,7 @@ let pokemonRepository = (function() {
 let p001 = {
     name: 'Bulbasaur',
     category: 'Seed',
-    height: '2\' 04"',
+    height: {feet: 2, inches: 4},
     weight: 15.2,
     abilities: ['Overgrow'],
     type: ['Grass', 'Poison'],
@@ -125,7 +125,7 @@ let p001 = {
 let p002 = {
     name: 'Ivysaur',
     category: 'Seed',
-    height: '3\' 03"',
+    height: {feet: 3, inches: 3},
     weight: 28.7,
     abilities: ['Overgrow'],
     type: ['Grass', 'Poison'],
@@ -140,7 +140,7 @@ let p002 = {
 let p003 = {
     name: 'Venusaur',
     category: 'Seed',
-    height: '6\' 07"',
+    height: {feet: 6, inches: 7},
     weight: 220.5,
     abilities: ['Overgrow'],
     type: ['Grass', 'Poison'],
@@ -155,7 +155,7 @@ let p003 = {
 let p004 = {
     name: 'Charmander',
     category: 'Lizard',
-    height: '2\' 00"',
+    height: {feet: 2, inches: 0},
     weight: 18.7,
     abilities: ['Blaze'],
     type: ['Fire'],
@@ -169,7 +169,7 @@ let p004 = {
 let p005 = {
     name: 'Charmeleon',
     category: 'Flame',
-    height: '3\' 07"',
+    height: {feet: 3, inches: 7},
     weight: 41.9,
     abilities: ['Blaze'],
     type: ['Fire'],
@@ -183,7 +183,7 @@ let p005 = {
 let p006 = {
     name: 'Charizard',
     category: 'Flame',
-    height: '5\' 07"',
+    height: {feet: 5, inches: 7},
     weight: 199.5,
     abilities: ['Blaze'],
     type: ['Fire', 'Flying'],
@@ -197,7 +197,7 @@ let p006 = {
 let p007 = {
     name: 'Squirtle',
     category: 'Tiny Turtle',
-    height: '1\' 08"',
+    height: {feet: 1, inches: 8},
     weight: 19.8,
     abilities: ['Torrent'],
     type: ['Water'],
@@ -207,7 +207,7 @@ let p007 = {
 let p008 = {
     name: 'Wartortle',
     category: 'Turtle',
-    height: '3\' 03"',
+    height: {feet: 3, inches: 3},
     weight: 49.6,
     abilities: ['Torrent'],
     type: ['Water'],
@@ -217,7 +217,7 @@ let p008 = {
 let p009 = {
     name: 'Blastoise',
     category: 'Shellfish',
-    height: '5\' 03"',
+    height: {feet: 5, inches: 3},
     weight: 188.5,
     abilities: ['Torrent'],
     type: ['Water'],
@@ -244,8 +244,8 @@ pokemonRepository.add(p011);
 // Print pokemon to DOM
 pokemonRepository.getAll().forEach(function(pokemon) {
     pokelist = document.getElementById('pokelist');
-    pokelist.insertAdjacentHTML('beforeend', pokemon.name + '<br/>Height: ' + pokemon.height + '<br/>Weight:' + pokemon.weight + 'lbs' + '<br/>');
-    if (pokemon.height > '3\' 00"' && pokemon.weight > 100){
+    pokelist.insertAdjacentHTML('beforeend', pokemon.name + '<br/>Height: ' + pokemon.height.feet + '\' ' + pokemon.height.inches + '"' + '<br/>Weight:' + pokemon.weight + 'lbs' + '<br/>');
+    if (pokemon.height.feet > 3 && pokemon.weight > 100){
         pokelist.insertAdjacentHTML('beforeend', 'What a chonker!<br/><br/>');
     }
     else{
@@ -256,3 +256,5 @@ pokemonRepository.getAll().forEach(function(pokemon) {
 console.log(pokemonRepository.filterBy('name', 'Blastoise'));
 console.log(pokemonRepository.filterBy('category', 'Seed'));
 console.log(pokemonRepository.filterBy('abilities', 'Blaze'));
+console.log(pokemonRepository.filterBy('height', 2));
+console.log(pokemonRepository.filterBy('weight', 100));
