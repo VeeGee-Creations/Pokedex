@@ -1,34 +1,152 @@
-body, html {
+:root{
+    font-size: 16px;
+    --text-primary: #b6b6b6;
+    --text-secondary: #ececec;
+    --bg-primary: #23232e;
+    --bg-secondary: #141418;
+}
+
+/* body, html {
     height: 100vh;
     width: 100vw;
-}
+} */
 
 body {
+    color: black;
     background-color: lightgrey;
+    font-family: pokemon_gbregular;
+    margin: 0;
+    padding: 0;
 }
 
-* + * {
+body::-webkit-scrollbar,
+body::-webkit-scrollb {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+body::-webkit-scrollbar-track,
+body::-webkit-scrollbar-corner {
+    background: #1e1e24;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #6649b8;
+}
+
+/* .wrapper{
+    height: 100%;
+    width: 100%;
+} */
+
+main {
+    margin-left: 5rem;
+}
+
+.navbar {
+    width: 5rem;
+    height: 100vh;
+    position: fixed;
+    background-color: var(--bg-primary);
+    transition: all 0.25s ease;
+}
+
+.pokelist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-logo {
+    align-self: flex-end;
+}
+
+ul:nth-child(n+2) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.nav-logo svg {
+    min-width: 2rem;
+    margin: 0.5rem 1rem 1rem;
+    transform: rotate(540deg);
+    transition: all 0.5s ease;
+}
+
+.nav-title h2 {
+    color: var(--text-primary);
+    margin-bottom: 3rem;
+    opacity: 0;
+}
+
+.navbar:hover {
+    width: 16rem;
+    transition: all 0.5s ease;
+}
+
+
+/* * + * {
     margin-top: 0;
-}
+} */
 
-body {
+/* body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
+} */
 
-p {
+
+
+/* p {
     text-align: center;
     font-weight: bold;
     font-size: 16px;
-}
+} */
 
-h1{
+/* h1{
     text-align: center;
+} */
+
+.pokebutton{
+     /*override default*/
+    border: none;
+    /*inherit font from parent*/
+    font-family: inherit;
+    /*style button and font*/
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: .75em;
+    border-radius: 3px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+    height: 3rem;
+    width: 16rem;
+    opacity: 0;
+    transition: all 0.1s ease;
+    
 }
 
-.wrapper{
-    height: 100%;
-    width: 100%;
+.navbar:hover .pokebutton,
+.navbar:hover .nav-title h2 {
+    opacity: 1;
+    transition: opacity 0.5s ease 0.35s;
+}
+
+.navbar:hover .nav-logo svg {
+    transform: rotate(0deg);
+    transition: all 1s ease;
+}
+.pokebutton:hover,
+.pokebutton:focus{
+    /*turn mouse to hand*/
+    cursor: pointer;
+    /*reduce opacity*/
+    background-color: var(--bg-secondary);
 }

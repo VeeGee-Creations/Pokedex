@@ -99,10 +99,21 @@ let pokemonRepository = (function() {
         }
     }
 
+    function addListItem(pokemon) {
+        let pokelist = document.querySelector('.pokelist');
+        let listItem = document.createElement('li');
+        let button = document.createElement('button');
+        button.innerText = pokemon.name;
+        button.classList.add('pokebutton');
+        listItem.appendChild(button);
+        pokelist.appendChild(listItem);
+    }
+
     return {
         add: add,
         getAll: getAll,
-        filterBy: filterBy
+        filterBy: filterBy,
+        addListItem: addListItem
     };
 })();
 
@@ -242,7 +253,7 @@ pokemonRepository.add(p010);
 pokemonRepository.add(p011);
 
 // Print pokemon to DOM
-pokemonRepository.getAll().forEach(function(pokemon) {
+/*pokemonRepository.getAll().forEach(function(pokemon) {
     pokelist = document.getElementById('pokelist');
     pokelist.insertAdjacentHTML('beforeend', pokemon.name + '<br/>Height: ' + pokemon.height.feet + '\' ' + pokemon.height.inches + '"' + '<br/>Weight:' + pokemon.weight + 'lbs' + '<br/>');
     if (pokemon.height.feet > 3 && pokemon.weight > 100){
@@ -251,6 +262,10 @@ pokemonRepository.getAll().forEach(function(pokemon) {
     else{
         pokelist.insertAdjacentHTML('beforeend', '<br/>')
     }
+});*/
+
+pokemonRepository.getAll().forEach(function(pokemon){
+    pokemonRepository.addListItem(pokemon);
 });
 
 console.log(pokemonRepository.filterBy('name', 'Blastoise'));
