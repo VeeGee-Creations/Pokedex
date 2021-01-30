@@ -49,11 +49,12 @@ let pokemonRepository = (function() {
         }
     }
 1
+    //return pokemonList
     function getAll() {
         return pokemonList;
     }
 
-
+    // filter pokemonList by property
     function filterBy(property, parameter){
         if(property === 'name'){
             const nameList = pokemonList.filter(function (pokemon) {
@@ -99,6 +100,7 @@ let pokemonRepository = (function() {
         }
     }
 
+    // create button for each pokemon and add event listener
     function addListItem(pokemon) {
         let pokelist = document.querySelector('.pokelist');
         let listItem = document.createElement('li');
@@ -107,6 +109,20 @@ let pokemonRepository = (function() {
         button.classList.add('pokebutton');
         listItem.appendChild(button);
         pokelist.appendChild(listItem);
+        addEventListener(button);
+    }
+
+    // create event listener for element that shows details
+    function addEventListener(element) {
+        element.addEventListener('click', function (event) {
+            let captured = filterBy('name', event.target.innerText);
+            showDetails(captured);
+        });
+    }
+
+    // console log details of pokemon
+    function showDetails(pokemon) {
+        console.log(pokemon);
     }
 
     return {
@@ -236,8 +252,8 @@ let p009 = {
 };
 
 //test filters
-let p010 = 11;
-let p011 = {name: 'crayon', color: 'red'};
+// let p010 = 11;
+// let p011 = {name: 'crayon', color: 'red'};
 
 // Add Pokemon to pokeRepository
 pokemonRepository.add(p001);
@@ -249,8 +265,8 @@ pokemonRepository.add(p006);
 pokemonRepository.add(p007);
 pokemonRepository.add(p008);
 pokemonRepository.add(p009);
-pokemonRepository.add(p010);
-pokemonRepository.add(p011);
+// pokemonRepository.add(p010);
+// pokemonRepository.add(p011);
 
 // Print pokemon to DOM
 /*pokemonRepository.getAll().forEach(function(pokemon) {
@@ -268,8 +284,8 @@ pokemonRepository.getAll().forEach(function(pokemon){
     pokemonRepository.addListItem(pokemon);
 });
 
-console.log(pokemonRepository.filterBy('name', 'Blastoise'));
-console.log(pokemonRepository.filterBy('category', 'Seed'));
-console.log(pokemonRepository.filterBy('abilities', 'Blaze'));
-console.log(pokemonRepository.filterBy('height', 2));
-console.log(pokemonRepository.filterBy('weight', 100));
+// console.log(pokemonRepository.filterBy('name', 'Blastoise'));
+// console.log(pokemonRepository.filterBy('category', 'Seed'));
+// console.log(pokemonRepository.filterBy('abilities', 'Blaze'));
+// console.log(pokemonRepository.filterBy('height', 2));
+// console.log(pokemonRepository.filterBy('weight', 100));
