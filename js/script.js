@@ -54,49 +54,88 @@ let pokemonRepository = (function() {
         return pokemonList;
     }
 
-    // filter pokemonList by property
-    function filterBy(property, parameter){
-        if(property === 'name'){
-            const nameList = pokemonList.filter(function (pokemon) {
-                return pokemon.name === parameter;
-            });
-            return nameList;
-        }
-        else if(property === 'category'){
-            const categoryList = pokemonList.filter(function (pokemon) {
-                return pokemon.category === parameter;
-            });
-            return categoryList;
-        }
-        else if(property === 'height'){
-            const heightList = pokemonList.filter(function (pokemon) {
-                return pokemon.height.feet >= parameter;
-            });
-            return heightList;
-        }
-        else if(property === 'weight'){
-            const weightList = pokemonList.filter(function (pokemon) {
-                return pokemon.weight >= parameter;
-            });
-            return weightList;
-        }
-        else if (property === 'abilities') {
-            const abilitiesList = pokemonList.filter(function (pokemon) {
-                return pokemon.abilities.includes(parameter);
-            });
-            return abilitiesList;
-        }
-        else if (property === 'type') {
-            const filteredList = pokemonList.filter(function (pokemon) {
-                return pokemon.type.includes(parameter);
-            });
-            return typeList;
-        }
-        else if (property === 'weakness') {
-            const filteredList = pokemonList.filter(function (pokemon) {
-                return pokemon.weakness.includes(parameter);
-            });
-            return weaknessList;
+    function filterBy(property, value) {
+        switch(property){
+            case 'name':
+                const nameList = pokemonList.filter(function (pokemon) {
+                    return pokemon.name === value;
+                });
+                if(nameList.length > 0) {
+                    return nameList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            case 'category':
+                const categoryList = pokemonList.filter(function (pokemon) {
+                    return pokemon.category === value;
+                });
+                if(categoryList.length > 0) {
+                    return categoryList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            case 'height':
+                const heightList = pokemonList.filter(function (pokemon) {
+                    return pokemon.height.feet >= value;
+                });
+                if(heightList.length > 0) {
+                    return heightList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            case 'weight':
+                const weightList = pokemonList.filter(function (pokemon) {
+                    return pokemon.weight >= value;
+                });
+                if (weightList.length > 0) {
+                    return weightList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            case 'abilities':
+                const abilitiesList = pokemonList.filter(function (pokemon) {
+                    return pokemon.abilities.includes(value);
+                });
+                if(abilitiesList.length > 0) {
+                    return abilitiesList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            case 'type':
+                const typeList = pokemonList.filter(function (pokemon) {
+                    return pokemon.type.includes(value);
+                });
+                if(typeList.length > 0) {
+                    return typeList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            case 'weakness':
+                const weaknessList = pokemonList.filter(function (pokemon) {
+                    return pokemon.weakness.includes(value);
+                });
+                if(weaknessList.length > 0) {
+                    return weaknessList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            default:
+                return property + ' does not exist';
+                break;
         }
     }
 
@@ -284,8 +323,10 @@ pokemonRepository.getAll().forEach(function(pokemon){
     pokemonRepository.addListItem(pokemon);
 });
 
-// console.log(pokemonRepository.filterBy('name', 'Blastoise'));
-// console.log(pokemonRepository.filterBy('category', 'Seed'));
-// console.log(pokemonRepository.filterBy('abilities', 'Blaze'));
-// console.log(pokemonRepository.filterBy('height', 2));
-// console.log(pokemonRepository.filterBy('weight', 100));
+console.log(pokemonRepository.filterBy('name', 'Blastoise'));
+console.log(pokemonRepository.filterBy('category', 'Seed'));
+console.log(pokemonRepository.filterBy('abilities', 'Blaze'));
+console.log(pokemonRepository.filterBy('height', 2));
+console.log(pokemonRepository.filterBy('weight', 100));
+console.log(pokemonRepository.filterBy('weight', 900));
+console.log(pokemonRepository.filterBy('weiht', 100));
