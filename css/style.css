@@ -20,17 +20,20 @@ body {
 }
 
 body::-webkit-scrollbar,
-body::-webkit-scrollb {
+.pokelist::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
 }
 
 body::-webkit-scrollbar-track,
-body::-webkit-scrollbar-corner {
+body::-webkit-scrollbar-corner,
+.pokelist::-webkit-scrolbar-track,
+.pokelist::-webkit-scrolbar-corner {
     background: #1e1e24;
 }
 
-body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb,
+.pokelist::-webkit-scrollbar-thumb {
     background: #6649b8;
 }
 
@@ -143,6 +146,12 @@ ul:nth-child(n+2) {
     transform: rotate(0deg);
     transition: all 1s ease;
 }
+
+.navbar:hover .pokelist {
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 .pokebutton:hover,
 .pokebutton:focus{
     /*turn mouse to hand*/
