@@ -56,91 +56,91 @@ let pokemonRepository = (function() {
         return pokemonList;
     }
 
-    // function filterBy(property, value) {
-    //     switch(property){
-    //         case "name":
-    //             const nameList = pokemonList.filter(function (pokemon) {
-    //                 return pokemon.name === value;
-    //             });
-    //             if (nameList.length > 0) {
-    //                 return nameList;
-    //             }
-    //             else {
-    //                 return 'No matches for ' + property + ': ' + value;
-    //                 // return nameList;
-    //             }
-    //             break;
-    //         // case 'category':
-    //         //     const categoryList = pokemonList.filter(function (pokemon) {
-    //         //         return pokemon.category === value;
-    //         //     });
-    //         //     if(categoryList.length > 0) {
-    //         //         return categoryList;
-    //         //     }
-    //         //     else {
-    //         //         return 'No matches for ' + property + ': ' + value;
-    //         //     }
-    //         //     break;
-    //         case 'height':
-    //             const heightList = pokemonList.filter(function (pokemon) {
-    //                 return pokemon.height.feet >= value;
-    //             });
-    //             if(heightList.length > 0) {
-    //                 return heightList;
-    //             }
-    //             else {
-    //                 return 'No matches for ' + property + ': ' + value;
-    //             }
-    //             break;
-    //         case 'weight':
-    //             const weightList = pokemonList.filter(function (pokemon) {
-    //                 return pokemon.weight >= value;
-    //             });
-    //             if (weightList.length > 0) {
-    //                 return weightList;
-    //             }
-    //             else {
-    //                 return 'No matches for ' + property + ': ' + value;
-    //             }
-    //             break;
-    //         case 'abilities':
-    //             const abilitiesList = pokemonList.filter(function (pokemon) {
-    //                 return pokemon.abilities.includes(value);
-    //             });
-    //             if(abilitiesList.length > 0) {
-    //                 return abilitiesList;
-    //             }
-    //             else {
-    //                 return 'No matches for ' + property + ': ' + value;
-    //             }
-    //             break;
-    //         case 'types':
-    //             const typeList = pokemonList.filter(function (pokemon) {
-    //                 return pokemon.type.includes(value);
-    //             });
-    //             if(typeList.length > 0) {
-    //                 return typeList;
-    //             }
-    //             else {
-    //                 return 'No matches for ' + property + ': ' + value;
-    //             }
-    //             break;
-    //         // case 'weakness':
-    //         //     const weaknessList = pokemonList.filter(function (pokemon) {
-    //         //         return pokemon.weakness.includes(value);
-    //         //     });
-    //         //     if(weaknessList.length > 0) {
-    //         //         return weaknessList;
-    //         //     }
-    //         //     else {
-    //         //         return 'No matches for ' + property + ': ' + value;
-    //         //     }
-    //         //     break;
-    //         default:
-    //             return property + ' does not exist';
-    //             break;
-    //     }
-    // }
+    function filterBy(property, value) {
+        switch(property){
+            case "name":
+                const nameList = pokemonList.filter(function (pokemon) {
+                    return pokemon.name === value;
+                });
+                if (nameList.length > 0) {
+                    return nameList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                    // return nameList;
+                }
+                break;
+            // case 'category':
+            //     const categoryList = pokemonList.filter(function (pokemon) {
+            //         return pokemon.category === value;
+            //     });
+            //     if(categoryList.length > 0) {
+            //         return categoryList;
+            //     }
+            //     else {
+            //         return 'No matches for ' + property + ': ' + value;
+            //     }
+            //     break;
+            case 'height':
+                const heightList = pokemonList.filter(function (pokemon) {
+                    return pokemon.height.feet >= value;
+                });
+                if(heightList.length > 0) {
+                    return heightList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            case 'weight':
+                const weightList = pokemonList.filter(function (pokemon) {
+                    return pokemon.weight >= value;
+                });
+                if (weightList.length > 0) {
+                    return weightList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            case 'abilities':
+                const abilitiesList = pokemonList.filter(function (pokemon) {
+                    return pokemon.abilities.includes(value);
+                });
+                if(abilitiesList.length > 0) {
+                    return abilitiesList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            case 'types':
+                const typeList = pokemonList.filter(function (pokemon) {
+                    return pokemon.type.includes(value);
+                });
+                if(typeList.length > 0) {
+                    return typeList;
+                }
+                else {
+                    return 'No matches for ' + property + ': ' + value;
+                }
+                break;
+            // case 'weakness':
+            //     const weaknessList = pokemonList.filter(function (pokemon) {
+            //         return pokemon.weakness.includes(value);
+            //     });
+            //     if(weaknessList.length > 0) {
+            //         return weaknessList;
+            //     }
+            //     else {
+            //         return 'No matches for ' + property + ': ' + value;
+            //     }
+            //     break;
+            default:
+                return property + ' does not exist';
+                break;
+        }
+    }
 
     // create button for each pokemon and add event listener
     function addListItem(pokemon) {
@@ -151,18 +151,19 @@ let pokemonRepository = (function() {
         button.classList.add('pokebutton');
         listItem.appendChild(button);
         pokelist.appendChild(listItem);
-        // addEventListener(button);
-        button.addEventListener('click', function(event) {
-            showDetails(pokemon);
-        })
+        addEventListener(button);
+        // button.addEventListener('click', function(event) {
+        //     showDetails(pokemon);
+        // })
     }
 
     // create event listener for element that shows details
-    // function addEventListener(element) {
-    //     element.addEventListener('click', function (event) {
-    //         showDetails(pokemonList.name(event.target.innerText))
-    //     });
-    // }
+    function addEventListener(element) {
+        element.addEventListener('click', function (event) {
+            let captured = filterBy('name', event.target.innerText);
+            showDetails(captured);
+        });
+    }
 
     //load pokemon from api
     function loadList() {
