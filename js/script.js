@@ -72,7 +72,9 @@ let pokemonRepository = (function() {
 
     //load pokemon from api
     async function loadList() {
+        showLoadingMessage();
         const data = await (await fetch(apiUrl).catch(function(e){
+            hideLoadingMessage();
             console.error(e);
         })).json();
 
@@ -80,6 +82,7 @@ let pokemonRepository = (function() {
     }
 
     function extractData(json) {
+        hideLoadingMessage();
         json.results.forEach(function (item) {
             const pokemon = {
                 name: item.name,
@@ -90,16 +93,19 @@ let pokemonRepository = (function() {
     }
 
     async function loadDetails(item) {
+        showLoadingMessage();
         let url = item.detailsUrl;
         return await fetch(url).then(function (response) {
             return response.json();
         }).then(function (details) {
+            hideLoadingMessage();
             item.imageUrl = details.sprites.front_default;
             item.height = details.height;
             item.types = details.types;
             item.weight = details.weight;
             item.abilities = details.abilities;
         }).catch(function (e) {
+            hideLoadingMessage();
             console.error(e);
         });
     }
@@ -112,11 +118,18 @@ let pokemonRepository = (function() {
     }
 
     function showLoadingMessage() {
-
+        let mainBody = document.querySelector('main');
+        let loadingMessage = document.createElement('p');
+        loadingMessage.classList.add('loading-message');
+        loadingMessage.innerText = 'Loading Pokemon';
+        mainBody.appendChild(loadingMessage);
     }
 
     function hideLoadingMessage() {
-
+        setTimeout(function() {
+            let loadingMessage = document.getElementsByClassName('loading-message')[0];
+            loadingMessage.parentNode.removeChild(loadingMessage);
+        }, 1000);
     }
 
     return {
