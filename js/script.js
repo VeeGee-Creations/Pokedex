@@ -67,20 +67,8 @@ let pokemonRepository = (function() {
                 }
                 else {
                     return 'No matches for ' + property + ': ' + value;
-                    // return nameList;
                 }
                 break;
-            // case 'category':
-            //     const categoryList = pokemonList.filter(function (pokemon) {
-            //         return pokemon.category === value;
-            //     });
-            //     if(categoryList.length > 0) {
-            //         return categoryList;
-            //     }
-            //     else {
-            //         return 'No matches for ' + property + ': ' + value;
-            //     }
-            //     break;
             case 'height':
                 const heightList = pokemonList.filter(function (pokemon) {
                     return pokemon.height.feet >= value;
@@ -125,17 +113,6 @@ let pokemonRepository = (function() {
                     return 'No matches for ' + property + ': ' + value;
                 }
                 break;
-            // case 'weakness':
-            //     const weaknessList = pokemonList.filter(function (pokemon) {
-            //         return pokemon.weakness.includes(value);
-            //     });
-            //     if(weaknessList.length > 0) {
-            //         return weaknessList;
-            //     }
-            //     else {
-            //         return 'No matches for ' + property + ': ' + value;
-            //     }
-            //     break;
             default:
                 return property + ' does not exist';
                 break;
@@ -166,24 +143,40 @@ let pokemonRepository = (function() {
     }
 
     //load pokemon from api
-    function loadList() {
-        return fetch(apiUrl).then(function (response) {
-            return response.json();
-        }).then(function (json) {
-            json.results.forEach(function (item) {
-                let pokemon = {
-                    name: item.name,
-                    detailsUrl: item.url
-                };
-                add(pokemon);
-            });
-        }).catch(function (e) {
+    async function loadList() {
+        const data = await (await fetch(apiUrl).catch(function(e){
             console.error(e);
-        })
+        })).json();
+
+       extractData(data);
+        // console.log(data);
+        // return fetch(apiUrl).then(function (response) {
+        //     return response.json();
+        // }).then(function (json) {
+        //     json.results.forEach(function (item) {
+        //         let pokemon = {
+        //             name: item.name,
+        //             detailsUrl: item.url
+        //         };
+        //         add(pokemon);
+        //     });
+        // }).catch(function (e) {
+        //     console.error(e);
+        // })
+    }
+
+    async function extractData(json) {
+        await json.results.forEach(function (item) {
+            const pokemon = {
+                name: item.name,
+                detailsUrl: item.url
+            };
+            add(pokemon);
+        });
     }
 
     function loadDetails(item) {
-        let url = item.detailsUrl;
+        let url = item[0].detailsUrl;
         return fetch(url).then(function (response) {
             return response.json();
         }).then(function (details) {
@@ -204,10 +197,16 @@ let pokemonRepository = (function() {
         });
     }
 
+    // async function searchFor(property, value) {
+    //     await loadList();
+    //     const result = filterBy(property, value);
+    //     return result;
+    // }
+
     return {
         add: add,
         getAll: getAll,
-        // filterBy: filterBy,
+        filterBy: filterBy,
         addListItem: addListItem,
         loadList: loadList,
         loadDetails: loadDetails
@@ -220,159 +219,12 @@ pokemonRepository.loadList().then(function() {
     });
 });
 
-// Create Pokemon
-// let p001 = {
-//     name: 'Bulbasaur',
-//     category: 'Seed',
-//     height: {feet: 2, inches: 4},
-//     weight: 15.2,
-//     abilities: ['Overgrow'],
-//     type: ['Grass', 'Poison'],
-//     weakness: [
-//         'Fire',
-//         'Psychic',
-//         'Flying',
-//         'Ice'
-//     ]
-// };
-
-// let p002 = {
-//     name: 'Ivysaur',
-//     category: 'Seed',
-//     height: {feet: 3, inches: 3},
-//     weight: 28.7,
-//     abilities: ['Overgrow'],
-//     type: ['Grass', 'Poison'],
-//     weakness: [
-//         'Fire',
-//         'Psychic',
-//         'Flying',
-//         'Ice'
-//     ]
-// };
-
-// let p003 = {
-//     name: 'Venusaur',
-//     category: 'Seed',
-//     height: {feet: 6, inches: 7},
-//     weight: 220.5,
-//     abilities: ['Overgrow'],
-//     type: ['Grass', 'Poison'],
-//     weakness: [
-//         'Fire',
-//         'Psychic',
-//         'Flying',
-//         'Ice'
-//     ]
-// };
-
-// let p004 = {
-//     name: 'Charmander',
-//     category: 'Lizard',
-//     height: {feet: 2, inches: 0},
-//     weight: 18.7,
-//     abilities: ['Blaze'],
-//     type: ['Fire'],
-//     weakness: [
-//         'Water',
-//         'Ground',
-//         'Rock'
-//     ]
-// };
-
-// let p005 = {
-//     name: 'Charmeleon',
-//     category: 'Flame',
-//     height: {feet: 3, inches: 7},
-//     weight: 41.9,
-//     abilities: ['Blaze'],
-//     type: ['Fire'],
-//     weakness: [
-//         'Water',
-//         'Ground',
-//         'Rock'
-//     ]
-// };
-
-// let p006 = {
-//     name: 'Charizard',
-//     category: 'Flame',
-//     height: {feet: 5, inches: 7},
-//     weight: 199.5,
-//     abilities: ['Blaze'],
-//     type: ['Fire', 'Flying'],
-//     weakness: [
-//         'Water',
-//         'Electric',
-//         'Rock'
-//     ]
-// };
-
-// let p007 = {
-//     name: 'Squirtle',
-//     category: 'Tiny Turtle',
-//     height: {feet: 1, inches: 8},
-//     weight: 19.8,
-//     abilities: ['Torrent'],
-//     type: ['Water'],
-//     weakness: ['Grass', 'Electric']
-// };
-
-// let p008 = {
-//     name: 'Wartortle',
-//     category: 'Turtle',
-//     height: {feet: 3, inches: 3},
-//     weight: 49.6,
-//     abilities: ['Torrent'],
-//     type: ['Water'],
-//     weakness: ['Grass', 'Electric']
-// };
-
-// let p009 = {
-//     name: 'Blastoise',
-//     category: 'Shellfish',
-//     height: {feet: 5, inches: 3},
-//     weight: 188.5,
-//     abilities: ['Torrent'],
-//     type: ['Water'],
-//     weakness: ['Grass', 'Electric']
-// };
-
-//test filters
-// let p010 = 11;
-// let p011 = {name: 'crayon', color: 'red'};
-
-// Add Pokemon to pokeRepository
-// pokemonRepository.add(p001);
-// pokemonRepository.add(p002);
-// pokemonRepository.add(p003);
-// pokemonRepository.add(p004);
-// pokemonRepository.add(p005);
-// pokemonRepository.add(p006);
-// pokemonRepository.add(p007);
-// pokemonRepository.add(p008);
-// pokemonRepository.add(p009);
-// pokemonRepository.add(p010);
-// pokemonRepository.add(p011);
-
-// Print pokemon to DOM
-/*pokemonRepository.getAll().forEach(function(pokemon) {
-    pokelist = document.getElementById('pokelist');
-    pokelist.insertAdjacentHTML('beforeend', pokemon.name + '<br/>Height: ' + pokemon.height.feet + '\' ' + pokemon.height.inches + '"' + '<br/>Weight:' + pokemon.weight + 'lbs' + '<br/>');
-    if (pokemon.height.feet > 3 && pokemon.weight > 100){
-        pokelist.insertAdjacentHTML('beforeend', 'What a chonker!<br/><br/>');
-    }
-    else{
-        pokelist.insertAdjacentHTML('beforeend', '<br/>')
-    }
-});*/
-
 pokemonRepository.getAll().forEach(function(pokemon){
     pokemonRepository.addListItem(pokemon);
 });
 
 console.log(pokemonRepository.getAll());
-// console.log(pokemonRepository.filterBy("name", "bulbasaur"));
+console.log(pokemonRepository.filterBy('name', "bulbasaur"));
 // console.log(pokemonRepository.filterBy('category', 'Seed'));
 // console.log(pokemonRepository.filterBy('abilities', 'blaze'));
 // console.log(pokemonRepository.filterBy('height', 2));
