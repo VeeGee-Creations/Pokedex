@@ -1,6 +1,8 @@
 let pokemonRepository = (function() {
     const pokemonList = [];
-    const apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1118';
+    const pokemonMenu = [];
+    let pokemonTotal = undefined;
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20';
     // We have defined modalContainer here
     const modalContainer = document.querySelector('#modal-container');
 
@@ -53,14 +55,19 @@ let pokemonRepository = (function() {
         }
     }
 
-    //return pokemonList
+    // return pokemonList
     function getAll() {
         return pokemonList;
     }
 
+    // return pokemonMenu
+    function getMenu() {
+        return pokemonMenu;
+    }
+
     // create button for each pokemon and add event listener
     function addListItem(pokemon) {
-        let pokelist = document.querySelector('.pokelist');
+        let pokelist = document.querySelector('#pokelist');
         let listItem = document.createElement('li');
         let button = document.createElement('button');
         button.innerText = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
@@ -71,6 +78,52 @@ let pokemonRepository = (function() {
             showDetails(pokemon);
             showModal();
         });
+    }
+
+    // create nav buttons and add event listener
+    function addMenuItem(navEle) {
+        let menuItems = [];
+        menuItems.push(navEle);
+        let navmenu = document.querySelector('#nav-menu');
+        let listItem = document.createElement('li');
+        let button = document.createElement('button');
+        button.innerText = Object.keys(navEle)[0].charAt(0).toUpperCase() + Object.keys(navEle)[0].slice(1);
+        button.classList.add('nav-button');
+        listItem.classList.add('nav-item')
+        listItem.appendChild(button);
+        navmenu.appendChild(listItem);
+        button.addEventListener('click', function(event) {
+            loadPage(navEle);
+        });
+    }
+
+    function loadPage(page) {
+        for (let propName in page) {
+            if (page.hasOwnProperty(propName)) {
+                let propValue = page[propName];
+                if (propValue === null) {
+                    apiUrl = apiUrl;
+                }
+                else {
+                    const pokelist = document.querySelector('#pokelist');
+                    const nextButton = document.querySelector('.nav-item');
+                    nextButton.parentNode.removeChild(nextButton);
+                    const previousButton = document.querySelector('.nav-item');
+                    previousButton.parentNode.removeChild(previousButton);
+                    apiUrl = propValue;
+                    pokelist.innerHTML = '';
+                    pokemonRepository.loadList().then(function () {
+                        pokemonRepository.getAll().forEach(function (pokemon) {
+                            pokemonRepository.addListItem(pokemon);
+                        });
+                    }).then(function () {
+                        pokemonRepository.getMenu().forEach(function (item) {
+                            pokemonRepository.addMenuItem(item);
+                        });
+                    });
+                }
+            }
+        }
     }
 
     //load pokemon from api
@@ -86,15 +139,26 @@ let pokemonRepository = (function() {
 
     function extractData(json) {
         hideLoadingMessage();
+        const next = {
+            next: json.next,
+        }
+        const previous = {
+            previous: json.previous,
+        }
+        pokemonTotal = json.count;
+        pokemonList.length = 0;
+        pokemonMenu.length = 0;
+        pokemonMenu.push(next, previous);
         json.results.forEach(function (item) {
             const pokemon = {
                 name: item.name,
                 detailsUrl: item.url
             };
+
             add(pokemon);
         });
     }
-
+    console.log(pokemonMenu);
     async function loadDetails(item) {
         showLoadingMessage();
         const url = item.detailsUrl;
@@ -215,7 +279,9 @@ let pokemonRepository = (function() {
     return {
         add: add,
         getAll: getAll,
+        getMenu: getMenu,
         addListItem: addListItem,
+        addMenuItem: addMenuItem,
         loadList: loadList,
         loadDetails: loadDetails,
     };
@@ -225,8 +291,8 @@ pokemonRepository.loadList().then(function() {
     pokemonRepository.getAll().forEach(function(pokemon){
         pokemonRepository.addListItem(pokemon);
     });
-});
-
-pokemonRepository.getAll().forEach(function(pokemon){
-    pokemonRepository.addListItem(pokemon);
+}).then(function(){
+    pokemonRepository.getMenu().forEach(function (item) {
+        pokemonRepository.addMenuItem(item);
+    });
 });

@@ -20,27 +20,22 @@ body {
 }
 
 body::-webkit-scrollbar,
-.pokelist::-webkit-scrollbar {
+.nav-menu::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
 }
 
 body::-webkit-scrollbar-track,
 body::-webkit-scrollbar-corner,
-.pokelist::-webkit-scrolbar-track,
-.pokelist::-webkit-scrolbar-corner {
+.nav-menu::-webkit-scrolbar-track,
+.nav-menu::-webkit-scrolbar-corner {
     background: #1e1e24;
 }
 
 body::-webkit-scrollbar-thumb,
-.pokelist::-webkit-scrollbar-thumb {
+.nav-menu::-webkit-scrollbar-thumb {
     background: #6649b8;
 }
-
-/* .wrapper{
-    height: 100%;
-    width: 100%;
-} */
 
 main {
     margin-left: 5rem;
@@ -59,7 +54,7 @@ main {
     transition: all 0.25s ease;
 }
 
-.pokelist {
+#nav-menu {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -69,16 +64,23 @@ main {
     height: 100%;
 }
 
+#pokelist {
+    list-style: none;
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
 .nav-logo {
     align-self: flex-end;
 }
 
-ul:nth-child(n+2) {
+/* .nav-menu:nth-child(n+2) {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-}
+} */
 
 .nav-logo svg {
     min-width: 2rem;
@@ -87,7 +89,7 @@ ul:nth-child(n+2) {
     transition: all 0.5s ease;
 }
 
-.nav-title h2 {
+.nav-title h3 {
     color: var(--text-primary);
     margin-bottom: 3rem;
     opacity: 0;
@@ -98,31 +100,23 @@ ul:nth-child(n+2) {
     transition: all 0.5s ease;
 }
 
+.pokebutton {
+    /*override default*/
+    border: none;
+    /*inherit font from parent*/
+    font-family: inherit;
+    /*style button and font*/
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: .75em;
+    border-radius: 3px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+    height: 3rem;
+    width: 16rem;
+}
 
-/* * + * {
-    margin-top: 0;
-} */
-
-/* body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-} */
-
-
-
-/* p {
-    text-align: center;
-    font-weight: bold;
-    font-size: 16px;
-} */
-
-/* h1{
-    text-align: center;
-} */
-
-.pokebutton{
+.nav-button {
      /*override default*/
     border: none;
     /*inherit font from parent*/
@@ -141,8 +135,8 @@ ul:nth-child(n+2) {
     
 }
 
-.navbar:hover .pokebutton,
-.navbar:hover .nav-title h2 {
+.navbar:hover .nav-button,
+.navbar:hover .nav-title h3 {
     opacity: 1;
     transition: opacity 0.5s ease 0.35s;
 }
@@ -152,13 +146,15 @@ ul:nth-child(n+2) {
     transition: all 1s ease;
 }
 
-.navbar:hover .pokelist {
+.navbar:hover .nav-menu {
     overflow-x: hidden;
     overflow-y: scroll;
 }
 
+.nav-button:hover,
+.nav-button:focus,
 .pokebutton:hover,
-.pokebutton:focus{
+.pokebutton:focus {
     /*turn mouse to hand*/
     cursor: pointer;
     /*reduce opacity*/

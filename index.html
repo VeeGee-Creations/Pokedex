@@ -9,7 +9,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <ul class="pokelist">
+        <ul id="nav-menu">
             <li class="nav-logo">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="50" height="50" x="0" y="0" viewBox="0 0 192.701 192.701" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
                 <g>
@@ -28,11 +28,15 @@
                 </svg>
             </li>
             <li class="nav-title">
-                <h2>Pokedex</h2>
+                <h3>Placeholder</h3>
             </li>
-</ul>
+        </ul>
     </nav>
     <main class="main">
+        <h1>Pokedex</h1>
+        <div id='pokemon-container'>
+            <ul id="pokelist"></ul>
+        </div>
         <div id='modal-container'></div>
     </main>
     <script src="js/promise-polyfill.js"></script>
