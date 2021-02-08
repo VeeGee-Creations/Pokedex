@@ -87,16 +87,26 @@ let pokemonRepository = (function() {
         let navmenu = document.querySelector('#nav-menu');
         let listItem = document.createElement('li');
         let button = document.createElement('button');
+        let navTitle = document.querySelector('.nav-title');
+        let titlePlaceholder = navTitle.childNodes[1];
+        console.log(titlePlaceholder);
+        let titleText = document.createElement('p');
+        let indexPoints = apiUrl.match(/\d+/g).map(Number);
+        indexPoints.shift();
+        let currentEndpoint = indexPoints[0] + indexPoints[1];
+        titleText.innerText = 'Pokemon\n' + indexPoints[0] + ' - ' + currentEndpoint + '\nof\n' + pokemonTotal;
         button.innerText = Object.keys(navEle)[0].charAt(0).toUpperCase() + Object.keys(navEle)[0].slice(1);
         button.classList.add('nav-button');
         listItem.classList.add('nav-item')
         listItem.appendChild(button);
         navmenu.appendChild(listItem);
+        navTitle.replaceChild(titleText, titlePlaceholder);
         button.addEventListener('click', function(event) {
             loadPage(navEle);
         });
     }
 
+    // load pokemon based on page
     function loadPage(page) {
         for (let propName in page) {
             if (page.hasOwnProperty(propName)) {
