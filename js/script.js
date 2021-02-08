@@ -191,8 +191,8 @@ let pokemonRepository = (function() {
     function showDetails(pokemon) {
         pokemonRepository.loadDetails(pokemon).then(function () {
             const pokeName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
-            const pokeHeight = pokemon.height;
-            const pokeWeight = pokemon.weight;
+            const pokeHeight = pokemon.height / 10;
+            const pokeWeight = pokemon.weight / 10;
             const pokeTypes = [];
             const pokeAbilities = [];
             const imageUrl = pokemon.imageUrl
@@ -206,8 +206,8 @@ let pokemonRepository = (function() {
                 pokeAbilities.push(item.ability.name.charAt(0).toUpperCase() + item.ability.name.slice(1));
             });
             
-            const pokeDetails = 'Height: ' + pokeHeight + '\'\n' + 'Weight: '
-             + pokeWeight + 'lbs\n' + 'Types: ' + pokeTypes.join(', ') + '\n'
+            const pokeDetails = 'Height: ' + pokeHeight + ' \m\n' + 'Weight: '
+             + pokeWeight + 'kg\n' + 'Types: ' + pokeTypes.join(', ') + '\n'
              + 'Abilities: ' + pokeAbilities.join(', ');
 
              console.log(pokeImage);
