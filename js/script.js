@@ -207,7 +207,7 @@ let pokemonRepository = (function() {
                 pokeAbilities.push(item.ability.name.charAt(0).toUpperCase() + item.ability.name.slice(1));
             });
             
-            const pokeDetails = 'Height: ' + pokeHeight + ' \m\n' + 'Weight: '
+            const pokeDetails = 'Height: ' + pokeHeight + '\m\n' + 'Weight: '
              + pokeWeight + 'kg\n' + 'Types: ' + pokeTypes.join(', ') + '\n'
              + 'Abilities: ' + pokeAbilities.join(', ');
 
