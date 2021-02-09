@@ -89,7 +89,6 @@ let pokemonRepository = (function() {
         let button = document.createElement('button');
         let navTitle = document.querySelector('.nav-title');
         let titlePlaceholder = navTitle.childNodes[1];
-        console.log(titlePlaceholder);
         let titleText = document.createElement('p');
         let indexPoints = apiUrl.match(/\d+/g).map(Number);
         indexPoints.shift();
@@ -116,10 +115,10 @@ let pokemonRepository = (function() {
                 }
                 else {
                     const pokelist = document.querySelector('#pokelist');
-                    const nextButton = document.querySelector('.nav-item');
-                    nextButton.parentNode.removeChild(nextButton);
-                    const previousButton = document.querySelector('.nav-item');
-                    previousButton.parentNode.removeChild(previousButton);
+                    const navItems = document.querySelectorAll('.nav-item');
+                    navItems.forEach(function(navItem){
+                        navItem.parentNode.removeChild(navItem);
+                    });
                     apiUrl = propValue;
                     pokelist.innerHTML = '';
                     pokemonRepository.loadList().then(function () {
