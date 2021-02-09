@@ -177,7 +177,8 @@ let pokemonRepository = (function() {
             return response.json();
         }).then(function (details) {
             hideLoadingMessage();
-            item.imageUrl = details.sprites.front_default;
+            console.log(details);
+            item.imageUrl = details.sprites.other['official-artwork'].front_default;
             item.height = details.height;
             item.types = details.types;
             item.weight = details.weight;
