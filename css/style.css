@@ -130,8 +130,17 @@ main {
     
 }
 
+#search-input,
+#search-button {
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    margin-bottom: 3rem;
+}
+
 .navbar:hover .nav-button,
-.navbar:hover .nav-title p {
+.navbar:hover .nav-title p,
+.navbar:hover #search-input,
+.navbar:hover #search-button {
     opacity: 1;
     transition: opacity 0.5s ease 0.35s;
 }

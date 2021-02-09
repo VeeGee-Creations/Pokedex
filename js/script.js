@@ -2,6 +2,8 @@ let pokemonRepository = (function() {
     const pokemonList = [];
     const pokemonMenu = [];
     let pokemonTotal = undefined;
+    const searchUrl = 'https://pokeapi.co/api/v2/pokemon/';
+    const defaultApiUrl = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20';
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20';
     // We have defined modalContainer here
     const modalContainer = document.querySelector('#modal-container');
@@ -67,9 +69,9 @@ let pokemonRepository = (function() {
 
     // create button for each pokemon and add event listener
     function addListItem(pokemon) {
-        let pokelist = document.querySelector('#pokelist');
-        let listItem = document.createElement('li');
-        let button = document.createElement('button');
+        const pokelist = document.querySelector('#pokelist');
+        const listItem = document.createElement('li');
+        const button = document.createElement('button');
         button.innerText = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
         button.classList.add('pokebutton');
         listItem.appendChild(button);
@@ -80,30 +82,72 @@ let pokemonRepository = (function() {
         });
     }
 
+    // create home button and event listener
+    function addHomeButton() {
+        const navmenu = document.querySelector('#nav-menu');
+        const listItem = document.createElement('li');
+        const homeButton = document.createElement('button');
+        homeButton.classList.add('nav-button');
+        homeButton.innerText = 'Home';
+        homeButton.classList.add('nav-button');
+        listItem.classList.add('nav-item');
+        listItem.appendChild(homeButton);
+        navmenu.appendChild(listItem);
+        homeButton.addEventListener('click', function (event) {
+            goHome();
+        });
+    }
+
+
     // create nav buttons and add event listener
     function addMenuItem(navEle) {
-        let menuItems = [];
+        const menuItems = [];
         menuItems.push(navEle);
-        let navmenu = document.querySelector('#nav-menu');
-        let listItem = document.createElement('li');
-        let button = document.createElement('button');
-        let navTitle = document.querySelector('.nav-title');
-        let titlePlaceholder = navTitle.childNodes[1];
-        let titleText = document.createElement('p');
-        let indexPoints = apiUrl.match(/\d+/g).map(Number);
+        
+        const navmenu = document.querySelector('#nav-menu');
+        const listItem = document.createElement('li');
+        const button = document.createElement('button');
+        const navTitle = document.querySelector('.nav-title');
+        const titlePlaceholder = navTitle.childNodes[1];
+        const titleText = document.createElement('p');
+        const indexPoints = apiUrl.match(/\d+/g).map(Number);
         indexPoints.shift();
-        let currentEndpoint = indexPoints[0] + indexPoints[1];
+        const currentEndpoint = indexPoints[0] + indexPoints[1];
+        
         titleText.innerText = 'Pokemon\n' + indexPoints[0] + ' - ' + currentEndpoint + '\nof\n' + pokemonTotal;
         button.innerText = Object.keys(navEle)[0].charAt(0).toUpperCase() + Object.keys(navEle)[0].slice(1);
+        listItem.classList.add('nav-item');
         button.classList.add('nav-button');
-        listItem.classList.add('nav-item')
         listItem.appendChild(button);
         navmenu.appendChild(listItem);
+
         const firstNavButton = document.querySelector('.nav-button');
         firstNavButton.setAttribute("style", "border-top: 2px solid rgba(0, 0, 0, 0.3)");
         navTitle.replaceChild(titleText, titlePlaceholder);
         button.addEventListener('click', function(event) {
             loadPage(navEle);
+        });
+    }
+
+    // load beginning of list
+    function goHome() {
+        const pokelist = document.querySelector('#pokelist');
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(function (navItem) {
+            navItem.parentNode.removeChild(navItem);
+        });
+        apiUrl = defaultApiUrl;
+        pokelist.innerHTML = '';
+        pokemonRepository.loadList().then(function () {
+            pokemonRepository.getAll().forEach(function (pokemon) {
+                pokemonRepository.addListItem(pokemon);
+            });
+        }).then(function () {
+            addHomeButton();
+        }).then(function () {
+            pokemonRepository.getMenu().forEach(function (item) {
+                pokemonRepository.addMenuItem(item);
+            });
         });
     }
 
@@ -128,6 +172,8 @@ let pokemonRepository = (function() {
                             pokemonRepository.addListItem(pokemon);
                         });
                     }).then(function () {
+                            addHomeButton();
+                        }).then(function () {
                         pokemonRepository.getMenu().forEach(function (item) {
                             pokemonRepository.addMenuItem(item);
                         });
@@ -190,8 +236,8 @@ let pokemonRepository = (function() {
     }
 
     // modal display of pokemon details of pokemon
-    function showDetails(pokemon) {
-        pokemonRepository.loadDetails(pokemon).then(function () {
+    async function showDetails(pokemon) {
+        await pokemonRepository.loadDetails(pokemon).then(function () {
             const pokeName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
             const pokeHeight = pokemon.height / 10;
             const pokeWeight = pokemon.weight / 10;
@@ -237,7 +283,7 @@ let pokemonRepository = (function() {
         titleElement.innerText = name;
 
         const imageElement = document.createElement('img');
-        imageElement.setAttribute('src', image);
+        image && imageElement.setAttribute('src', image);
 
         const contentElement = document.createElement('p');
         contentElement.innerText = details;
@@ -293,6 +339,7 @@ let pokemonRepository = (function() {
         getAll: getAll,
         getMenu: getMenu,
         addListItem: addListItem,
+        addHomeButton: addHomeButton,
         addMenuItem: addMenuItem,
         loadList: loadList,
         loadDetails: loadDetails,
@@ -303,8 +350,11 @@ pokemonRepository.loadList().then(function() {
     pokemonRepository.getAll().forEach(function(pokemon){
         pokemonRepository.addListItem(pokemon);
     });
+}).then(function () {
+    pokemonRepository.addHomeButton();
 }).then(function(){
     pokemonRepository.getMenu().forEach(function (item) {
         pokemonRepository.addMenuItem(item);
     });
 });
+
