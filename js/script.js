@@ -99,6 +99,8 @@ let pokemonRepository = (function() {
         listItem.classList.add('nav-item')
         listItem.appendChild(button);
         navmenu.appendChild(listItem);
+        const firstNavButton = document.querySelector('.nav-button');
+        firstNavButton.setAttribute("style", "border-top: 2px solid rgba(0, 0, 0, 0.3)");
         navTitle.replaceChild(titleText, titlePlaceholder);
         button.addEventListener('click', function(event) {
             loadPage(navEle);
@@ -167,7 +169,7 @@ let pokemonRepository = (function() {
             add(pokemon);
         });
     }
-    console.log(pokemonMenu);
+    // console.log(pokemonMenu);
     async function loadDetails(item) {
         showLoadingMessage();
         const url = item.detailsUrl;
