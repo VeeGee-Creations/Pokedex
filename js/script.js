@@ -112,6 +112,7 @@ let pokemonRepository = (function() {
                     pokelist.appendChild(searchError);
                 }
                 else {
+                    hideLoadingMessage();
                     pokemonRepository.loadSearch(searchedPokemon);
                 }
             }).catch(function (e) {

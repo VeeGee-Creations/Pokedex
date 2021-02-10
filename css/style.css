@@ -46,6 +46,11 @@ main {
     justify-content: center;
 }
 
+main p {
+    text-align: center;
+    margin-left: 3rem;
+}
+
 .main h1 {
     text-align: center;
     margin-left: 3rem;
