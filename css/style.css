@@ -46,6 +46,11 @@ main {
     justify-content: center;
 }
 
+.main h1 {
+    text-align: center;
+    margin-left: 3rem;
+}
+
 .navbar {
     width: 5rem;
     height: 100vh;

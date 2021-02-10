@@ -8,7 +8,7 @@ let pokemonRepository = (function() {
     // We have defined modalContainer here
     const modalContainer = document.querySelector('#modal-container');
 
-    function add(pokemon) {
+    function addPokemon(pokemon) {
 
         // Create array of pokemon properties
         const pokArray = Object.keys(pokemon);
@@ -67,6 +67,60 @@ let pokemonRepository = (function() {
         return pokemonMenu;
     }
 
+    // search for pokemon
+    function pokemonSearch() {
+        const searchInput = document.getElementById("search-input").value.toLowerCase();
+        if (searchInput === '') {
+            const pokelist = document.querySelector('#pokelist');
+            const navItems = document.querySelectorAll('.nav-item');
+            pokemonList.length = 0;
+            pokelist.innerHTML = '';
+            pokelist.removeAttribute('style', 'columns: 1');
+            navItems.forEach(function (navItem) {
+                navItem.parentNode.removeChild(navItem);
+            });
+            pokemonRepository.loadList().then(function () {
+                pokemonRepository.getAll().forEach(function (pokemon) {
+                    pokemonRepository.addListItem(pokemon);
+                });
+            }).then(function () {
+                pokemonRepository.addHomeButton();
+            }).then(function () {
+                pokemonRepository.getMenu().forEach(function (item) {
+                    pokemonRepository.addMenuItem(item);
+                });
+            });
+        }
+
+        else {
+            pokemonUrl = searchUrl + searchInput;
+            const searchedPokemon = {
+                name: searchInput,
+                detailsUrl: pokemonUrl
+            };
+            showLoadingMessage();
+            fetch(searchedPokemon.detailsUrl).then(response => {
+                if (!response.ok) {
+                    hideLoadingMessage();
+                    const pokelist = document.querySelector('#pokelist');
+                    const mainBody = document.querySelector('main');
+                    const searchError = document.createElement('li');
+                    searchError.classList.add('search-error');
+                    searchError.innerText = 'Search did not return results.';
+                    pokelist.innerHTML = '';
+                    pokelist.setAttribute('style', 'columns: 1');
+                    pokelist.appendChild(searchError);
+                }
+                else {
+                    pokemonRepository.loadSearch(searchedPokemon);
+                }
+            }).catch(function (e) {
+                hideLoadingMessage();
+                console.error(e);
+            });
+        }
+    }
+
     // create button for each pokemon and add event listener
     function addListItem(pokemon) {
         const pokelist = document.querySelector('#pokelist');
@@ -80,22 +134,27 @@ let pokemonRepository = (function() {
             showDetails(pokemon);
             showModal();
         });
+
     }
 
-    // create home button and event listener
+    // create home button and event listeners
     function addHomeButton() {
         const navmenu = document.querySelector('#nav-menu');
         const listItem = document.createElement('li');
         const homeButton = document.createElement('button');
+        const searchButton = document.querySelector('#search-button');
+        const searchBar = document.querySelector('#search-input')
         homeButton.classList.add('nav-button');
         homeButton.innerText = 'Home';
         homeButton.classList.add('nav-button');
         listItem.classList.add('nav-item');
         listItem.appendChild(homeButton);
         navmenu.appendChild(listItem);
-        homeButton.addEventListener('click', function (event) {
-            goHome();
-        });
+        const firstNavButton = document.querySelector('.nav-button');
+        firstNavButton.setAttribute("style", "border-top: 2px solid rgba(0, 0, 0, 0.3)");
+        homeButton.addEventListener('click', goHome);
+        searchButton.addEventListener('click',  pokemonSearch);
+        searchBar.addEventListener('search', pokemonSearch); 
     }
 
 
@@ -121,8 +180,6 @@ let pokemonRepository = (function() {
         listItem.appendChild(button);
         navmenu.appendChild(listItem);
 
-        const firstNavButton = document.querySelector('.nav-button');
-        firstNavButton.setAttribute("style", "border-top: 2px solid rgba(0, 0, 0, 0.3)");
         navTitle.replaceChild(titleText, titlePlaceholder);
         button.addEventListener('click', function(event) {
             loadPage(navEle);
@@ -138,6 +195,7 @@ let pokemonRepository = (function() {
         });
         apiUrl = defaultApiUrl;
         pokelist.innerHTML = '';
+        pokelist.removeAttribute('style', 'columns: 1');
         pokemonRepository.loadList().then(function () {
             pokemonRepository.getAll().forEach(function (pokemon) {
                 pokemonRepository.addListItem(pokemon);
@@ -183,7 +241,29 @@ let pokemonRepository = (function() {
         }
     }
 
-    //load pokemon from api
+    // load pokemon from search
+    function loadSearch (pokemon) {
+        console.log(pokemon);
+        const pokelist = document.querySelector('#pokelist');
+        const navItems = document.querySelectorAll('.nav-item');
+        const navTitle = document.querySelector('.nav-title');
+        const titlePlaceholder = navTitle.childNodes[1];
+        const titleText = document.createElement('p');
+        pokeName = pokemon.name;
+        titleText.innerText = 'Returned\n' + pokeName.charAt(0).toUpperCase() + pokeName.slice(1);
+        pokemonList.length = 0;
+        pokelist.innerHTML = '';
+        navTitle.replaceChild(titleText, titlePlaceholder);
+        navItems.forEach(function (navItem) {
+            navItem.parentNode.removeChild(navItem);
+        });
+        pokelist.setAttribute('style', 'columns: 1');
+        addHomeButton();
+        addPokemon(pokemon);
+        pokemonRepository.addListItem(pokemonList[0]);
+    }
+
+    // load pokemon from api
     async function loadList() {
         showLoadingMessage();
         const data = await (await fetch(apiUrl).catch(function(e){
@@ -212,10 +292,11 @@ let pokemonRepository = (function() {
                 detailsUrl: item.url
             };
 
-            add(pokemon);
+            addPokemon(pokemon);
         });
     }
-    // console.log(pokemonMenu);
+ 
+    // request pokemon details from api
     async function loadDetails(item) {
         showLoadingMessage();
         const url = item.detailsUrl;
@@ -322,25 +403,21 @@ let pokemonRepository = (function() {
         loadingMessage.classList.add('loading-message');
         loadingMessage.innerText = 'Loading Pokemon';
         mainBody.appendChild(loadingMessage);
-        setTimeout(function(){
-            return;
-        }, 1000)
     }
 
     function hideLoadingMessage() {
-        setTimeout(function () {
-            const loadingMessage = document.getElementsByClassName('loading-message')[0];
-            loadingMessage.parentNode.removeChild(loadingMessage);
-        }, 500);
+        const loadingMessage = document.getElementsByClassName('loading-message')[0];
+        loadingMessage.parentNode.removeChild(loadingMessage);
     }
 
     return {
-        add: add,
+        addPokemon: addPokemon,
         getAll: getAll,
         getMenu: getMenu,
         addListItem: addListItem,
         addHomeButton: addHomeButton,
         addMenuItem: addMenuItem,
+        loadSearch: loadSearch,
         loadList: loadList,
         loadDetails: loadDetails,
     };
@@ -357,4 +434,3 @@ pokemonRepository.loadList().then(function() {
         pokemonRepository.addMenuItem(item);
     });
 });
-
