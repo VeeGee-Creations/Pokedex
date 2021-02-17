@@ -127,18 +127,13 @@ let pokemonRepository = (function() {
         const pokelist = document.querySelector('#pokelist');
         const listItem = document.createElement('li');
         const button = document.createElement('button');
-        listItem.classList.add('list-group-item');
         button.innerText = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
         button.classList.add('pokebutton');
-        button.classList.add('btn');
-        button.classList.add('btn-primary');
-        button.setAttribute('data-toggle', 'modal');
-        button.setAttribute('data-target', '#pokemonModal');
         listItem.appendChild(button);
         pokelist.appendChild(listItem);
         button.addEventListener('click', function(event) {
             showDetails(pokemon);
-            // showModal();
+            showModal();
         });
 
     }
@@ -173,15 +168,13 @@ let pokemonRepository = (function() {
         const listItem = document.createElement('li');
         const button = document.createElement('button');
         const navTitle = document.querySelector('.nav-title');
-        const titlePlaceholder = navTitle.childNodes[0];
+        const titlePlaceholder = navTitle.childNodes[1];
         const titleText = document.createElement('p');
         const indexPoints = apiUrl.match(/\d+/g).map(Number);
         indexPoints.shift();
         const currentEndpoint = indexPoints[0] + indexPoints[1];
         
-        titleText.innerText = 'Pokemon ' + indexPoints[0] + ' - ' + currentEndpoint + ' of ' + pokemonTotal;
-        titleText.classList.add('text-center')
-        titleText.setAttribute('tabindex', '0');
+        titleText.innerText = 'Pokemon\n' + indexPoints[0] + ' - ' + currentEndpoint + '\nof\n' + pokemonTotal;
         button.innerText = Object.keys(navEle)[0].charAt(0).toUpperCase() + Object.keys(navEle)[0].slice(1);
         listItem.classList.add('nav-item');
         button.classList.add('nav-button');
@@ -255,11 +248,10 @@ let pokemonRepository = (function() {
         const pokelist = document.querySelector('#pokelist');
         const navItems = document.querySelectorAll('.nav-item');
         const navTitle = document.querySelector('.nav-title');
-        const titlePlaceholder = navTitle.childNodes[0];
+        const titlePlaceholder = navTitle.childNodes[1];
         const titleText = document.createElement('p');
         pokeName = pokemon.name;
-        titleText.innerText = 'Returned ' + pokeName.charAt(0).toUpperCase() + pokeName.slice(1);
-        titleText.classList.add('text-center')
+        titleText.innerText = 'Returned\n' + pokeName.charAt(0).toUpperCase() + pokeName.slice(1);
         pokemonList.length = 0;
         pokelist.innerHTML = '';
         navTitle.replaceChild(titleText, titlePlaceholder);
@@ -294,7 +286,7 @@ let pokemonRepository = (function() {
         pokemonTotal = json.count;
         pokemonList.length = 0;
         pokemonMenu.length = 0;
-        pokemonMenu.push(previous, next);
+        pokemonMenu.push(next, previous);
         json.results.forEach(function (item) {
             const pokemon = {
                 name: item.name,
@@ -313,6 +305,7 @@ let pokemonRepository = (function() {
             return response.json();
         }).then(function (details) {
             hideLoadingMessage();
+            console.log(details);
             item.imageUrl = details.sprites.other['official-artwork'].front_default;
             item.height = details.height;
             item.types = details.types;
@@ -346,6 +339,8 @@ let pokemonRepository = (function() {
             const pokeDetails = 'Height: ' + pokeHeight + '\m\n' + 'Weight: '
              + pokeWeight + 'kg\n' + 'Types: ' + pokeTypes.join(', ') + '\n'
              + 'Abilities: ' + pokeAbilities.join(', ');
+
+             console.log(pokeImage);
             
             showModal(pokeName, pokeImage, pokeDetails);
         });
@@ -353,27 +348,55 @@ let pokemonRepository = (function() {
 
     
     function showModal(name, image, details) {
-        const modalTitle = document.querySelector('#pokemonModalLabel');
-        const modalBody = document.querySelector('.modal-body');
+
+        // Clear all existing modal content
+        modalContainer.innerHTML = '';
+
+        const modal = document.createElement('div');
+        modal.classList.add('modal');
+
+        // Add the new modal content
+        const closeButtonElement = document.createElement('button');
+        closeButtonElement.classList.add('modal-close');
+        closeButtonElement.innerText = 'X';
+        closeButtonElement.addEventListener('click', hideModal);
+
+        const titleElement = document.createElement('h1');
+        titleElement.innerText = name;
+
         const imageElement = document.createElement('img');
-        const contentElement = document.createElement('p');
-
-        modalTitle.innerText = '';
-        modalTitle.innerText = name;
-        modalTitle.setAttribute('tabindex', '0');
-
-        modalBody.innerHTML = '';
         image && imageElement.setAttribute('src', image);
-        imageElement.setAttribute('id', 'pokemon-img');
-        imageElement.setAttribute('alt', name + '-image');
-        // imageElement.setAttribute('height', '400px');
 
+        const contentElement = document.createElement('p');
         contentElement.innerText = details;
-        contentElement.setAttribute('tabindex', '0');
 
-        modalBody.appendChild(imageElement);
-        modalBody.appendChild(contentElement);
+        modal.appendChild(closeButtonElement);
+        modal.appendChild(titleElement);
+        modal.appendChild(imageElement);
+        modal.appendChild(contentElement);
+        modalContainer.appendChild(modal);
+
+        modalContainer.classList.add('is-visible');
     }
+
+    function hideModal() {
+        modalContainer.classList.remove('is-visible');
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+            hideModal();
+        }
+    });
+
+    modalContainer.addEventListener('click', (e) => {
+        //Since this is also triggered when clicking INSIDE the modal
+        //We only want to close if the user clicks directly on the overlay
+        const target = e.target;
+        if (target === modalContainer) {
+            hideModal();
+        }
+    });
 
     function showLoadingMessage() {
         const mainBody = document.querySelector('main');
