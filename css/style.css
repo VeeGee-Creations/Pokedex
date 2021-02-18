@@ -1,7 +1,6 @@
 :root{
     font-size: 16px;
     --text-primary: #b6b6b6;
-    --text-secondary: #ececec;
     --bg-primary: #23232e;
     --bg-secondary: #141418;
 }
@@ -12,6 +11,20 @@ body {
     font-family: pokemon_gbregular;
 }
 
+body::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+body::-webkit-scrollbar-track,
+body::-webkit-scrollbar-corner {
+    background: var(--bg-primary);
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--bg-secondary);
+}
+
 .navbar {
     justify-content: center;
     background-color: var(--bg-primary)
@@ -20,20 +33,44 @@ body {
 .search {
     display: flex;
     justify-content: center;
+    margin-bottom: 1rem;
 }
 
-.nav-title {
-    margin: auto auto;
-    margin-top: 0.5rem;
-    color: var(--text-secondary)
+#search-input {
+    margin-right: 0.5rem;
 }
 
-.page-container {
-    margin-top: 164px;
+#nav-box {
+    display: flex;
+    justify-content: center;
 }
 
 #nav-menu {
     display: flex;
+}
+
+.nav-button {
+    /*override default*/
+    border: none;
+    /*inherit font from parent*/
+    font-family: inherit;
+    /*style button and font*/
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: .75em;
+    border-radius: 3px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    height: 3rem;
+    width: 16rem;
+    margin-right: 0.25rem;
+    box-shadow: 5px 5px 25px 0 rgba(0,0,0, .35);
+    transition: all 0.1s ease;
+    
+}
+
+.page-container {
+    margin-top: 100px;
 }
 
 main {
@@ -44,19 +81,87 @@ main {
     justify-content: center;
 }
 
-main h1 {
-    margin-bottom: 2rem;
+.nav-title {
+    margin: auto auto;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+#pokelist {
+    columns: 4;
+    -webkit-columns: 4;
+    -moz-columns: 4;
+    text-align: center;
 }
 
 #pokelist li {
-    background-color: lightgrey;
-    text-align: center;
+    margin-right: 1rem;
+}
+
+.pokebutton {
+    /*override default*/
+    border: none;
+    /*inherit font from parent*/
+    font-family: inherit;
+    /*style button and font*/
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: .75em;
+    border-radius: 50px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 5px 10px 0 rgba(0,0,0, .25);
+    height: 3rem;
+    width: 16rem;
+    margin-bottom: 0.25rem;
+}
+
+.nav-button:hover,
+.nav-button:focus,
+.pokebutton:hover,
+.pokebutton:focus {
+    /*turn mouse to hand*/
+    cursor: pointer;
+    /*reduce opacity*/
+    background-color: var(--bg-secondary);
+    transition: all 0.1s ease;
 }
 
 #pokemon-img {
     display: block;
     margin: auto auto;
     width: 50%;
+}
+
+@media screen and (max-width: 1100px) {
+    #pokelist {
+        columns: 2;
+        -webkit-columns: 2;
+        -moz-columns: 2;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    #nav-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .page-container {
+        margin-top: 200px;
+    }
+}
+
+@media screen and (max-width: 570px) {
+    #pokelist {
+        columns: 1;
+        -webkit-columns: 1;
+        -moz-columns: 1;
+        text-align: center;
+    }
 }
 
 @media screen and (max-width: 450px) {
@@ -66,18 +171,7 @@ main h1 {
         justify-content: center;
     }
 
-    #nav-menu {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-    }
-
     .page-container {
         margin-top: 230px;
     }
 }
-
-
-
-

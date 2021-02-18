@@ -12,22 +12,24 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <nav class="navbar fixed-top col-12">
+            <nav class="navbar fixed-top col-12 navbar-dark">
                 <div class="search col-12">
                     <input type="search" id="search-input" placeholder="Search Pokemon..." size="18">
                     <input id="search-button" type="button" value="search">
                 </div>
-                <div class="nav-title col-12"><p></p></div>
-                <ul class="list-unstyled" id="nav-menu">
-                </ul>
+                <div class="col-12" id="nav-box">
+                    <ul class="list-unstyled" id="nav-menu">
+                    </ul>
+                </div>
             </nav>
         </div>
         <div class="page-container row">
             <div class="col-12">
                 <main class="main">
                     <h1 tabindex="0">Pokedex</h1>
+                    <div class="nav-title col-12"><p></p></div>
                     <div id='pokemon-container'>
-                        <ul class="list-unstyled list-group" id="pokelist"></ul>
+                        <ul class="list-unstyled" id="pokelist"></ul>
                     </div>
                     <div class="modal fade" id="pokemonModal" tabindex="-1" role="dialog" aria-labelledby="pokemonModalLabel"
                         aria-hidden="true">

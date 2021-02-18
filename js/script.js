@@ -127,16 +127,13 @@ let pokemonRepository = (function() {
         const pokelist = document.querySelector('#pokelist');
         const listItem = document.createElement('li');
         const button = document.createElement('button');
-        listItem.classList.add('list-group-item');
         button.innerText = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
         button.classList.add('pokebutton');
-        button.classList.add('btn');
-        button.classList.add('btn-primary');
         button.setAttribute('data-toggle', 'modal');
         button.setAttribute('data-target', '#pokemonModal');
         listItem.appendChild(button);
         pokelist.appendChild(listItem);
-        button.addEventListener('click', function(event) {
+        button.addEventListener('click', function() {
             showDetails(pokemon);
             // showModal();
         });
@@ -156,8 +153,6 @@ let pokemonRepository = (function() {
         listItem.classList.add('nav-item');
         listItem.appendChild(homeButton);
         navmenu.appendChild(listItem);
-        const firstNavButton = document.querySelector('.nav-button');
-        firstNavButton.setAttribute("style", "border-top: 2px solid rgba(0, 0, 0, 0.3)");
         homeButton.addEventListener('click', goHome);
         searchButton.addEventListener('click',  pokemonSearch);
         searchBar.addEventListener('search', pokemonSearch); 
