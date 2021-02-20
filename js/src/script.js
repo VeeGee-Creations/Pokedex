@@ -26,7 +26,6 @@ let pokemonRepository = (function () {
 
         }(pokArray, properties);
 
-        // pokemonList.push(pokemon)
         // if formated properly, push to list
         if (typeof pokemon === 'object') {
             if (comparrison === true) {
@@ -373,7 +372,6 @@ let pokemonRepository = (function () {
         image && imageElement.setAttribute('src', image);
         imageElement.setAttribute('id', 'pokemon-img');
         imageElement.setAttribute('alt', name + '-image');
-        // imageElement.setAttribute('height', '400px');
 
         contentElement.innerText = details;
         contentElement.setAttribute('tabindex', '0');

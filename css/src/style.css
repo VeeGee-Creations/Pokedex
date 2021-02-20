@@ -126,7 +126,7 @@ main {
     outline: none;
     /*turn mouse to hand*/
     cursor: pointer;
-    /*reduce opacity*/
+    /*make button stand out*/
     background-color: var(--hilight-primary);
     transform: scale(1.06);
     transition: all 0.1s ease;
