@@ -1,8 +1,9 @@
 :root{
     font-size: 16px;
-    --text-primary: #b6b6b6;
+    --text-primary: #fff;
     --bg-primary: #23232e;
     --bg-secondary: #141418;
+    --hilight-primary: #6649b8;
 }
 
 body {
@@ -22,7 +23,7 @@ body::-webkit-scrollbar-corner {
 }
 
 body::-webkit-scrollbar-thumb {
-    background: var(--bg-secondary);
+    background: var(--hilight-primary);
 }
 
 .navbar {
@@ -55,7 +56,7 @@ body::-webkit-scrollbar-thumb {
     /*inherit font from parent*/
     font-family: inherit;
     /*style button and font*/
-    background-color: var(--bg-primary);
+    background-color: var(--bg-secondary);
     color: var(--text-primary);
     text-decoration: none;
     padding: .75em;
@@ -104,26 +105,30 @@ main {
     /*inherit font from parent*/
     font-family: inherit;
     /*style button and font*/
-    background-color: var(--bg-primary);
+    background-color: var(--bg-secondary);
     color: var(--text-primary);
     text-decoration: none;
     padding: .75em;
     border-radius: 50px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.3);
     box-shadow: 5px 5px 10px 0 rgba(0,0,0, .25);
-    height: 3rem;
+    height: 4rem;
     width: 16rem;
     margin-bottom: 0.25rem;
 }
+
 
 .nav-button:hover,
 .nav-button:focus,
 .pokebutton:hover,
 .pokebutton:focus {
+    /*remove defaut focus*/
+    outline: none;
     /*turn mouse to hand*/
     cursor: pointer;
     /*reduce opacity*/
-    background-color: var(--bg-secondary);
+    background-color: var(--hilight-primary);
+    transform: scale(1.06);
     transition: all 0.1s ease;
 }
 
