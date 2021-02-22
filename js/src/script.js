@@ -420,4 +420,3 @@ pokemonRepository.loadList().then(function () {
         pokemonRepository.addMenuItem(item);
     });
 });
-
