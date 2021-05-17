@@ -6,7 +6,13 @@ let pokemonRepository = (function () {
     fetch and parse pokemon data*/
     function onLoad() {
         if(!localStorage.getItem('pokemon')) {
-            fetchPokemon().then(res => localStorage.setItem('pokemon', JSON.stringify(res.results)));
+            fetchPokemon().then(res => localStorage.setItem('pokemon', JSON.stringify(res.results)))
+            .then(() => {
+                results = JSON.parse(localStorage.getItem('pokemon'));
+                results.map(pokemon => pokeList.push(pokemon));
+                populatePage(pokeList);
+            })
+            .catch(err => console.error(err));
         };
 
         results = JSON.parse(localStorage.getItem('pokemon'));
