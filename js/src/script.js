@@ -168,12 +168,7 @@ function pokemonSearch() {
     const searchResult = results.filter(pokemon => pokemon.name.match(searchRegExp))
     if(searchResult.length > 1) pokelist.removeAttribute('style', 'columns: 1');
     if(searchResult.length < 2) pokelist.setAttribute('style', 'columns: 1');
-    if(history.pushState) {
-        history.pushState(null, null, '#page-1');
-    }
-    else {
-        location.hash = '#page-1';
-    }
+    location.hash = '#page-1';
     splitPokeList(searchResult, 16);
     
 }
