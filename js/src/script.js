@@ -1,25 +1,20 @@
 let pokemonRepository = (function () {
     const apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=-1';
-    const pokeList = [];
 
 /*      ---Initializer---
     fetch and parse pokemon data*/
     function onLoad() {
-        if(!localStorage.getItem('pokemon')) {
+        if(localStorage.getItem('pokemon').length < 1) {
             fetchPokemon().then(res => localStorage.setItem('pokemon', JSON.stringify(res.results)))
             .then(() => {
-                results = JSON.parse(localStorage.getItem('pokemon'));
-                results.map(pokemon => pokeList.push(pokemon));
-                populatePage(pokeList);
+                const results = JSON.parse(localStorage.getItem('pokemon'));
+                splitPokeList(results);
             })
             .catch(err => console.error(err));
         };
 
-        results = JSON.parse(localStorage.getItem('pokemon'));
-        results.map(pokemon => pokeList.push(pokemon));
-        // populatePage(pokeList);
-        // listByPage();
-        splitPokeList(pokeList, 16);
+        const results = JSON.parse(localStorage.getItem('pokemon'));
+        splitPokeList(results, 16);
     }
 
     async function fetchPokemon() {
@@ -52,32 +47,38 @@ let pokemonRepository = (function () {
                     const pageSelector = $(function() {
                         return $('.simple-pagination').pagination('getCurrentPage');
                     });
-                    const page = parseInt(pageSelector[0].URL.slice(-1));
 
+                    const page = function () {
+                        const firstpage = 1;
+                        if(pageSelector[0].URL.match(/\d+/)) {
+                            return parseInt(pageSelector[0].URL.match(/\d+/)[0]);
+                        }
+                        return firstpage;
+                    }
+                    
                     $(function() {
-                        $('.simple-pagination').pagination('drawPage', page || 1);
+                        $('.simple-pagination').pagination('drawPage', page());
                     });
                     pokelist.innerHTML = '';
-                    populatePage(results[page-1 || 0]);
+                    pokemonCount(page(), results);
+                    populatePage(results[page()-1]);
                 },
                 onPageClick: function(page) {
                     pokelist.innerHTML = '';
+                    pokemonCount(page, results);
                     populatePage(results[page-1]);
                 }
             });
         });
-        // populatePage(results[page-1]);
-        // return results;
     }
-    // function listByPage() {
-    //     const list = splitPokeList(pokeList, 16);
-    //     const page = $(function() {
-    //         return $('.simple-pagination').pagination('getCurrentPage');
-    //     });
-    //     const pageNum = parseInt(page[0].URL.slice(-1));
 
-    //     populatePage(list[pageNum-1]);
-    // }
+    function pokemonCount(page, results) {
+        const pokeCount = JSON.parse(localStorage.getItem('pokemon')).length;
+        const totalPages = results.length;
+        const countMessage = document.querySelector('#pokeCount');
+        if(totalPages < 2) countMessage.textContent = `${results[0].length} of ${pokeCount} Pokemon`;
+        if(totalPages > 1)countMessage.textContent = `${16 * page - 15}-${Math.min(16 * page, pokeCount)} of ${pokeCount} Pokemon`;
+    }
     /*      ---End---       */
 
     /*  ---Populate Page With Pokemon Buttons---    */
@@ -159,14 +160,21 @@ function searchListener(){
 
 // search for pokemon
 function pokemonSearch() {
+    const results = JSON.parse(localStorage.getItem('pokemon'));
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     const searchRegExp = new RegExp(searchInput, 'g');
     const pokelist = document.querySelector('#pokelist');
     pokelist.innerHTML = '';
-    const searchResult = pokeList.filter(pokemon => pokemon.name.match(searchRegExp))
+    const searchResult = results.filter(pokemon => pokemon.name.match(searchRegExp))
     if(searchResult.length > 1) pokelist.removeAttribute('style', 'columns: 1');
     if(searchResult.length < 2) pokelist.setAttribute('style', 'columns: 1');
-    populatePage(searchResult);
+    if(history.pushState) {
+        history.pushState(null, null, '#page-1');
+    }
+    else {
+        location.hash = '#page-1';
+    }
+    splitPokeList(searchResult, 16);
     
 }
 
