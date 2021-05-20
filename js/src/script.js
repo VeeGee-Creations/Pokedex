@@ -17,7 +17,9 @@ let pokemonRepository = (function () {
 
         results = JSON.parse(localStorage.getItem('pokemon'));
         results.map(pokemon => pokeList.push(pokemon));
-        populatePage(pokeList);
+        // populatePage(pokeList);
+        // listByPage();
+        splitPokeList(pokeList, 16);
     }
 
     async function fetchPokemon() {
@@ -30,13 +32,60 @@ let pokemonRepository = (function () {
 
     /*      ---End---       */
 
+    /*      ---Pagination--- */
+    function splitPokeList(pokemonArray, size) {
+        const results = [];
+        const pokelist = document.querySelector('#pokelist');
+    
+        while (pokemonArray.length) {
+            results.push(pokemonArray.splice(0, size));
+        }
+    
+        $(function() {
+            $('.simple-pagination').pagination({
+                items: results.length,
+                itemsOnPage: 1,
+                displayedPages: 10,
+                currentPage: 1,
+                cssStyle: 'light-theme',
+                onInit: function() {
+                    const pageSelector = $(function() {
+                        return $('.simple-pagination').pagination('getCurrentPage');
+                    });
+                    const page = parseInt(pageSelector[0].URL.slice(-1));
+
+                    $(function() {
+                        $('.simple-pagination').pagination('drawPage', page || 1);
+                    });
+                    pokelist.innerHTML = '';
+                    populatePage(results[page-1 || 0]);
+                },
+                onPageClick: function(page) {
+                    pokelist.innerHTML = '';
+                    populatePage(results[page-1]);
+                }
+            });
+        });
+        // populatePage(results[page-1]);
+        // return results;
+    }
+    // function listByPage() {
+    //     const list = splitPokeList(pokeList, 16);
+    //     const page = $(function() {
+    //         return $('.simple-pagination').pagination('getCurrentPage');
+    //     });
+    //     const pageNum = parseInt(page[0].URL.slice(-1));
+
+    //     populatePage(list[pageNum-1]);
+    // }
+    /*      ---End---       */
+
     /*  ---Populate Page With Pokemon Buttons---    */
     function populatePage(pokemonList) {
         pokemonList.map(pokemon => {
             const pokelist = document.querySelector('#pokelist');
             const listItem = document.createElement('li');
             const button = document.createElement('button');
-
             button.innerText = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
             button.classList.add('pokebutton');
             button.setAttribute('data-toggle', 'modal');
