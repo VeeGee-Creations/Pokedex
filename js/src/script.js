@@ -1,20 +1,15 @@
 let pokemonRepository = (function () {
     const apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=-1';
+    const pokeList = [];
 
 /*      ---Initializer---
     fetch and parse pokemon data*/
-    function onLoad() {
-        if(localStorage.getItem('pokemon').length < 1) {
-            fetchPokemon().then(res => localStorage.setItem('pokemon', JSON.stringify(res.results)))
-            .then(() => {
-                const results = JSON.parse(localStorage.getItem('pokemon'));
-                splitPokeList(results);
-            })
-            .catch(err => console.error(err));
-        };
-
-        const results = JSON.parse(localStorage.getItem('pokemon'));
-        splitPokeList(results, 16);
+    async function onLoad() {
+        await fetchPokemon().then(res => {
+            res.results.map(pokemon => pokeList.push(pokemon));
+            splitPokeList(pokeList, 16)
+        })
+        .catch(err => console.error(err));
     }
 
     async function fetchPokemon() {
@@ -29,11 +24,12 @@ let pokemonRepository = (function () {
 
     /*      ---Pagination--- */
     function splitPokeList(pokemonArray, size) {
+        const dupPokeList = [...pokemonArray]
         const results = [];
         const pokelist = document.querySelector('#pokelist');
-    
-        while (pokemonArray.length) {
-            results.push(pokemonArray.splice(0, size));
+
+        while (dupPokeList.length) {
+            results.push(dupPokeList.splice(0, size));
         }
     
         $(function() {
@@ -60,20 +56,19 @@ let pokemonRepository = (function () {
                         $('.simple-pagination').pagination('drawPage', page());
                     });
                     pokelist.innerHTML = '';
-                    pokemonCount(page(), results);
+                    pokemonCount(page(), results, pokeList.length);
                     populatePage(results[page()-1]);
                 },
                 onPageClick: function(page) {
                     pokelist.innerHTML = '';
-                    pokemonCount(page, results);
+                    pokemonCount(page, results, pokeList.length);
                     populatePage(results[page-1]);
                 }
             });
         });
     }
 
-    function pokemonCount(page, results) {
-        const pokeCount = JSON.parse(localStorage.getItem('pokemon')).length;
+    function pokemonCount(page, results, pokeCount) {
         const totalPages = results.length;
         const countMessage = document.querySelector('#pokeCount');
         if(totalPages < 2) countMessage.textContent = `${results[0].length} of ${pokeCount} Pokemon`;
@@ -160,7 +155,7 @@ function searchListener(){
 
 // search for pokemon
 function pokemonSearch() {
-    const results = JSON.parse(localStorage.getItem('pokemon'));
+    const results = [...pokeList];
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     const searchRegExp = new RegExp(searchInput, 'g');
     const pokelist = document.querySelector('#pokelist');
